@@ -5,10 +5,17 @@ public class PlayerMovement : MonoBehaviour
 {
     public InputActionAsset inputActions;
     public float moveSpeed;
-    public Animator playerModelAnimator;
+    public float jumpHeight;
+    public float gravityMultiplier = 1;
 
+    [Header("Animations")]
+    public Animator playerModelAnimator;
+    public string walkBool, jumpTrigger;
+
+    Vector3 playerVelocity;
     Transform mainCamera;
     CharacterController controller;
+    const float gravityValue = -9.81f;
 
     bool isReady;
 
@@ -24,23 +31,50 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (controller.isGrounded && playerVelocity.y < 0)
+        {
+            playerVelocity.y = 0f;
+        }
+
+        //====================
+        //Horizontal Movement
+
         Vector2 moveInput = InputManager.Instance.ReadMoveInput();
+        Vector2 adjustedInputVector = GetDirectionVector(moveInput);
+        Vector3 move = new Vector3(adjustedInputVector.x, 0, adjustedInputVector.y);
+
+        //====================
+        //Set Animator state
 
         if (moveInput.Equals(Vector2.zero))
         {
-            playerModelAnimator.SetBool("Moving", false);
+            playerModelAnimator.SetBool(walkBool, false);
         }
         else
         {
-            playerModelAnimator.SetBool("Moving", true);
+            playerModelAnimator.SetBool(walkBool, true);
         }
 
-        Vector2 moveDirection = GetDirectionVector(moveInput);
+        //====================
+        //Jump
 
-        controller.Move(new Vector3(moveDirection.x, 0, moveDirection.y) * moveSpeed * Time.deltaTime);
+        if (InputManager.Instance.ReadJump() && controller.isGrounded)
+        {
+            playerVelocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravityValue * gravityMultiplier);
+            playerModelAnimator.SetTrigger(jumpTrigger);
+        }
 
-        //Rotate in moving direction
+        //====================
+        //Apply gravity
+
+        playerVelocity.y += gravityValue * gravityMultiplier * Time.deltaTime;
+
+        //====================
+        //Combine and apply movement
+
+        Vector3 moveVector = (move * moveSpeed) + (playerVelocity.y * Vector3.up);
         
+        controller.Move(moveVector * Time.deltaTime);
     }
 
     Vector2 GetDirectionVector(Vector2 inputVector)

@@ -21,9 +21,9 @@ public class InputManager : MonoBehaviour
     }
 
     public InputActionAsset inputActions;
-    public string mapName, moveName;
+    public string mapName, moveName, jumpName;
     InputActionMap playerMap;
-    InputAction moveAction;
+    InputAction moveAction, jumpAction;
 
     bool isReady;
 
@@ -32,6 +32,8 @@ public class InputManager : MonoBehaviour
         playerMap = inputActions.FindActionMap(mapName);
 
         moveAction = playerMap.FindAction(moveName);
+
+        jumpAction = playerMap.FindAction(jumpName);
 
         playerMap.Enable();
     }
@@ -51,5 +53,10 @@ public class InputManager : MonoBehaviour
     public Vector2 ReadMoveInput()
     {
         return moveAction.ReadValue<Vector2>();
+    }
+
+    public bool ReadJump()
+    {
+        return jumpAction.WasPressedThisFrame();
     }
 }
