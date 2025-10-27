@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
+    [Header("Controls")]
     public InputActionAsset inputActions;
     public float moveSpeed;
     public float jumpHeight;
@@ -17,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     CharacterController controller;
     const float gravityValue = -9.81f;
 
-    bool isReady;
+    bool isReady, isDead;
 
     void Start()
     {
@@ -91,5 +92,22 @@ public class PlayerMovement : MonoBehaviour
 
         //Convert angle to vector2
         return new Vector2(Mathf.Cos(finalAngle), Mathf.Sin(finalAngle)).normalized;
+    }
+
+    public void ReactToDamage()
+    {
+        if (isDead)
+            return;
+
+        //React however needed
+    }
+
+    public void Die()
+    {
+        if (isDead == false)
+        {
+            isDead = true;
+            print("Player died");
+        }
     }
 }
