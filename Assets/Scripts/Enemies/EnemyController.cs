@@ -27,14 +27,11 @@ public class EnemyController : MonoBehaviour, IDamageable
 
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
-            if (agent.remainingDistance < attackRange)
-            {
-                anim.SetBool("Attacking", true);
-            }
-            else
-            {
-                anim.SetBool("Attacking", false);
-            }
+            anim.SetBool("Attacking", true);
+        }
+        else
+        {
+            anim.SetBool("Attacking", false);
         }
     }
 
