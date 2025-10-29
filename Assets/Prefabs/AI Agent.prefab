@@ -104,10 +104,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf6b990a8f80ce849ad21656dbdca7df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startHealth: 20
+  maxHealth: 20
   healthBar: {fileID: 5675735581142071291}
   controllerScript: {fileID: 4460589830294690967}
   onDeath: {fileID: 11400000, guid: 2e3f6b1101e682b44b17612b7e03d25a, type: 2}
+  healthStat: {fileID: 0}
 --- !u!114 &4460589830294690967
 MonoBehaviour:
   m_ObjectHideFlags: 0

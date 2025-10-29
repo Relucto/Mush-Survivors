@@ -1,24 +1,51 @@
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class Health : MonoBehaviour, IAwaitable
 {
-    public int startHealth;
+    public int maxHealth;
     public ProgressBar healthBar;
     public MonoBehaviour controllerScript;
     public GameEvent onDeath; //Used to broadcast publicly
-
+    public PlayerUpgrade healthStat;
 
     int health;
     IDamageable damageable;
+
+    bool isReady;
+    public bool IsReady() => isReady;
+
+    void OnEnable()
+    {
+        if (healthStat != null)
+        {
+            healthStat.levelUp += SetMaxHealth;
+        }
+    }
+
+    void OnDisable()
+    {
+        if (healthStat != null)
+        {
+            healthStat.levelUp -= SetMaxHealth;
+        }
+    }
 
     void Start()
     {
         damageable = controllerScript.GetComponent<IDamageable>();
 
-        health = startHealth;
+        if (healthStat != null)
+            SetMaxHealth(healthStat.GetLevelValue());
+
+        health = maxHealth;
 
         if (healthBar != null)
-            healthBar.SetMaxValue(startHealth);
+        {
+            healthBar.SetMaxValue(maxHealth);
+            healthBar.SetValue(maxHealth);
+        }
+
+        isReady = true;
     }
 
     //TESTING!!!!!!!!!!!!!!!!!!!!!!!!!1
@@ -55,5 +82,13 @@ public class Health : MonoBehaviour
         //Set health bar
         if (healthBar != null)
             healthBar.SetValue(health);
+    }
+    
+    void SetMaxHealth(float value)
+    {
+        maxHealth = (int)value;
+        healthBar.SetMaxValue(value);
+
+        print("Max health is now " + maxHealth);
     }
 }

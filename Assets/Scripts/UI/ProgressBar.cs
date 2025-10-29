@@ -19,7 +19,6 @@ public class ProgressBar : MonoBehaviour
     public void SetMaxValue(float value)
     {
         slider.maxValue = value;
-        SetValue(value);
     }
 
     public void SetValue(float value)

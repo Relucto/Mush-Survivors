@@ -1,8 +1,11 @@
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour, IAwaitable
 {
     public static UIManager Instance { get; private set; }
+
+    bool isReady;
+    public bool IsReady() => isReady;
 
     void Awake()
     {
@@ -18,7 +21,12 @@ public class UIManager : MonoBehaviour
             }
         }
     }
-    
+
+    void Start()
+    {
+        isReady = true;
+    }
+
     public void HideCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;

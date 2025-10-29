@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour, IDamageable
+public class PlayerController : MonoBehaviour, IAwaitable, IDamageable
 {
     [Header("Controls")]
     public InputActionAsset inputActions;
-    public float moveSpeed;
+    public PlayerUpgrade speedStats;
+    float moveSpeed;
     public float jumpHeight;
     public float gravityMultiplier = 1;
 
@@ -18,17 +19,32 @@ public class PlayerController : MonoBehaviour, IDamageable
     CharacterController controller;
     const float gravityValue = -9.81f;
 
-    bool isReady, isDead;
+    bool isReady = false, isDead;
+
+    void OnEnable()
+    {
+        speedStats.levelUp += SetSpeed;
+    }
+
+    void OnDisable()
+    {
+        speedStats.levelUp -= SetSpeed;
+    }
 
     void Start()
     {
         mainCamera = Camera.main.transform;
         controller = GetComponent<CharacterController>();
 
+        SetSpeed(speedStats.GetLevelValue());
+
         isReady = true;
     }
 
-    public bool IsReady() => isReady;
+    public bool IsReady()
+    {
+        return isReady;
+    } 
 
     void Update()
     {
@@ -109,5 +125,13 @@ public class PlayerController : MonoBehaviour, IDamageable
             isDead = true;
             print("Player died");
         }
+    }
+
+    //========================================
+    //Upgrade functions
+
+    void SetSpeed(float value)
+    {
+        moveSpeed = value;
     }
 }
