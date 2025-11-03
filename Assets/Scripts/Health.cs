@@ -83,6 +83,23 @@ public class Health : MonoBehaviour, IAwaitable
         if (healthBar != null)
             healthBar.SetValue(health);
     }
+
+    public void Heal(int amount)
+    {
+        //If already dead, do nothing
+        if (health <= 0)
+            return;
+
+        health += amount;
+
+        //Clamp
+        if (health >= maxHealth)
+            health = maxHealth;
+
+        //Update health bar
+        if (healthBar != null)
+            healthBar.SetValue(health);
+    }
     
     void SetMaxHealth(float value)
     {

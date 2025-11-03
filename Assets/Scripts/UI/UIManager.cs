@@ -27,15 +27,15 @@ public class UIManager : MonoBehaviour, IAwaitable
         isReady = true;
     }
 
-    public void HideCursor()
+    public void PauseGame(bool value)
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
+        Time.timeScale = value == true ? 0 : 1;
 
-    public void ShowCursor()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = true;
+        Cursor.visible = value;
+
+        if (value == true)
+            Cursor.lockState = CursorLockMode.None;
+        else
+            Cursor.lockState = CursorLockMode.Locked;
     }
 }

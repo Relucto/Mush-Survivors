@@ -8,7 +8,7 @@ public class XPManager : MonoBehaviour
 
     public int baselineXPRequirement;
     public float subsequentLevelMult = 1;
-    public UnityEvent<int> playerLevelUp;
+    public UnityEvent<int> onPlayerLevelUp;
     public ProgressBar xpBar;
     public TMP_Text levelText, xpText;
 
@@ -59,8 +59,8 @@ public class XPManager : MonoBehaviour
             //Change Level text
             UpdateLevelText();
             
-            //Level up (event?)
-            playerLevelUp?.Invoke(playerLevel);
+            // Call level up event
+            onPlayerLevelUp?.Invoke(playerLevel);
         }
 
         UpdateXPText();

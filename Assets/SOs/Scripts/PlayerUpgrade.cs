@@ -4,6 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerUpgrade", menuName = "Scriptable Objects/PlayerUpgrade")]
 public class PlayerUpgrade : ScriptableObject
 {
+    [Header("Display")]
+    public string upgradeName = "Upgrade";
+    public Sprite displaySprite;
     public float[] levelValues;
     public event Action<float> levelUp;
 
