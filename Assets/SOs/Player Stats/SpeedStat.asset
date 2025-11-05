@@ -14,9 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeName: Speed
   displaySprite: {fileID: 21300000, guid: 484987ee4dc341d43ad81e31c171faac, type: 3}
-  levelValues:
-  - 5
-  - 6.5
-  - 8
-  - 10
-  - 14
+  levelValueGroup:
+  - stats:
+    - statName: Speed
+      value: 5
+  - stats:
+    - statName: Speed
+      value: 6
+  - stats:
+    - statName: Speed
+      value: 7
+  - stats:
+    - statName: Speed
+      value: 8

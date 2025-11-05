@@ -23,12 +23,12 @@ public class PlayerController : MonoBehaviour, IAwaitable, IDamageable
 
     void OnEnable()
     {
-        speedStats.levelUp += SetSpeed;
+        speedStats.levelUp += OnLevelUp;
     }
 
     void OnDisable()
     {
-        speedStats.levelUp -= SetSpeed;
+        speedStats.levelUp -= OnLevelUp;
     }
 
     void Start()
@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour, IAwaitable, IDamageable
         mainCamera = Camera.main.transform;
         controller = GetComponent<CharacterController>();
 
-        SetSpeed(speedStats.GetLevelValue());
+        SetSpeed(speedStats.GetLevelValue().stats[0].value);
 
         isReady = true;
     }
@@ -133,5 +133,17 @@ public class PlayerController : MonoBehaviour, IAwaitable, IDamageable
     void SetSpeed(float value)
     {
         moveSpeed = value;
+    }
+
+    void OnLevelUp(PlayerUpgrade.LevelStatGroup statGroup)
+    {
+        if (statGroup.stats.Length != 1)
+        {
+            Debug.LogError(speedStats.name + " has incorrect number of values");
+            Debug.Break();
+            return;
+        }
+
+        SetSpeed(statGroup.stats[0].value);
     }
 }

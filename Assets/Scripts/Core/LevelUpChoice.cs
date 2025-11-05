@@ -7,7 +7,7 @@ public class LevelUpChoice : MonoBehaviour
     [SerializeField] TMP_Text displayText;
     [SerializeField] Image displayImage;
     [SerializeField] Sprite defaultSprite;
-    [SerializeField] string defaultText;
+    [SerializeField] string defaultText, introEffect, lvlEffect;
     [SerializeField] int healthIncreaseIfEmpty;
     [SerializeField] Health playerHealth;
     PlayerUpgrade statToUpgrade;
@@ -22,7 +22,7 @@ public class LevelUpChoice : MonoBehaviour
 
             print("There's an empty one, have some health instead :)");
 
-            displayText.text = defaultText;
+            displayText.text = introEffect + defaultText;
             displayImage.overrideSprite = defaultSprite;
 
             return;
@@ -33,7 +33,7 @@ public class LevelUpChoice : MonoBehaviour
         int level = statToUpgrade.GetLevel();
 
         //Set display variables
-        displayText.text = statToUpgrade.upgradeName + ": Lvl " + level + " -> " + (level + 1);
+        displayText.text = introEffect + statToUpgrade.upgradeName + ": Lvl " + lvlEffect + level + " -> " + (level + 1);
         displayImage.overrideSprite = statToUpgrade.displaySprite;
     }
 

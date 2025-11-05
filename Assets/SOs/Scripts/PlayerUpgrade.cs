@@ -7,19 +7,33 @@ public class PlayerUpgrade : ScriptableObject
     [Header("Display")]
     public string upgradeName = "Upgrade";
     public Sprite displaySprite;
-    public float[] levelValues;
-    public event Action<float> levelUp;
+    //public float[] levelValues;
+    public LevelStatGroup[] levelValueGroup;
+    public event Action<LevelStatGroup> levelUp;
+
+    [System.Serializable]
+    public class LevelStatGroup
+    {
+        public LevelStat[] stats;
+    }
+
+    [System.Serializable]
+    public class LevelStat
+    {
+        public string statName;
+        public float value;
+    }
 
     int level = 1;
 
     public bool IsMaxLevel()
     {
-        return level >= levelValues.Length ? true : false;
+        return level >= levelValueGroup.Length ? true : false;
     }
 
     public void IncreaseLevel()
     {
-        if (level >= levelValues.Length)
+        if (level >= levelValueGroup.Length)
             return;
 
         level++;
@@ -27,16 +41,16 @@ public class PlayerUpgrade : ScriptableObject
         levelUp?.Invoke(GetLevelValue());
     }
 
-    public float GetLevelValue()
+    public LevelStatGroup GetLevelValue()
     {
-        if (levelValues.Length < 1)
+        if (levelValueGroup.Length < 1)
         {
             Debug.LogError(name + ": array too small");
             Debug.Break();
-            return -999;
+            return null;
         }
 
-        return levelValues[level - 1];
+        return levelValueGroup[level - 1];
     }
 
     public int GetLevel()

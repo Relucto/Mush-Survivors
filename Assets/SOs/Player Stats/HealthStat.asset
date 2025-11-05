@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeName: Health
   displaySprite: {fileID: 21300000, guid: 87a926b94d97cde42857e050badbc4c5, type: 3}
-  levelValues:
-  - 100
-  - 125
-  - 150
+  levelValueGroup:
+  - stats:
+    - statName: Health
+      value: 100
+  - stats:
+    - statName: Health
+      value: 130
+  - stats:
+    - statName: Health
+      value: 170

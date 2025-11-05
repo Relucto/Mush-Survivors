@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class Health : MonoBehaviour, IAwaitable
@@ -18,7 +19,7 @@ public class Health : MonoBehaviour, IAwaitable
     {
         if (healthStat != null)
         {
-            healthStat.levelUp += SetMaxHealth;
+            healthStat.levelUp += IncreaseOnLevelUp;
         }
     }
 
@@ -26,7 +27,7 @@ public class Health : MonoBehaviour, IAwaitable
     {
         if (healthStat != null)
         {
-            healthStat.levelUp -= SetMaxHealth;
+            healthStat.levelUp -= IncreaseOnLevelUp;
         }
     }
 
@@ -35,7 +36,7 @@ public class Health : MonoBehaviour, IAwaitable
         damageable = controllerScript.GetComponent<IDamageable>();
 
         if (healthStat != null)
-            SetMaxHealth(healthStat.GetLevelValue());
+            SetMaxHealth(healthStat.GetLevelValue().stats[0].value);
 
         health = maxHealth;
 
@@ -100,12 +101,23 @@ public class Health : MonoBehaviour, IAwaitable
         if (healthBar != null)
             healthBar.SetValue(health);
     }
-    
+
     void SetMaxHealth(float value)
     {
         maxHealth = (int)value;
         healthBar.SetMaxValue(value);
+    }
+    
+    void IncreaseOnLevelUp(PlayerUpgrade.LevelStatGroup statGroup)
+    {
+        if (statGroup.stats.Length != 1)
+        {
+            Debug.LogError(healthStat.name + " has incorrect number of values");
+            Debug.Break();
+            return;
+        }
 
+        SetMaxHealth(statGroup.stats[0].value);
         print("Max health is now " + maxHealth);
     }
 }
