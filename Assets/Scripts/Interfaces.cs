@@ -4,10 +4,15 @@ public interface IFireable
     float GetBaseCooldown();
 }
 
-public interface IDamageable
+public interface IEntity
 {
     void Die();
     void ReactToDamage();
+}
+
+public interface IDamageable
+{
+    void Damage(float value);
 }
 
 public interface IAwaitable

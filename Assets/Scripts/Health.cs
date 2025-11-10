@@ -1,7 +1,6 @@
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
-public class Health : MonoBehaviour, IAwaitable
+public class Health : MonoBehaviour, IAwaitable, IDamageable
 {
     public int maxHealth;
     public ProgressBar healthBar;
@@ -10,7 +9,7 @@ public class Health : MonoBehaviour, IAwaitable
     public PlayerUpgrade healthStat;
 
     int health;
-    IDamageable damageable;
+    IEntity entity;
 
     bool isReady;
     public bool IsReady() => isReady;
@@ -33,7 +32,7 @@ public class Health : MonoBehaviour, IAwaitable
 
     void Start()
     {
-        damageable = controllerScript.GetComponent<IDamageable>();
+        entity = controllerScript.GetComponent<IEntity>();
 
         if (healthStat != null)
             SetMaxHealth(healthStat.GetLevelValue().stats[0].value);
@@ -58,26 +57,27 @@ public class Health : MonoBehaviour, IAwaitable
         }
     }
 
-    public void Damage(int damage)
+    public void Damage(float damage)
     {
         if (health <= 0)
             return;
 
-        health -= damage;
+        health -= (int)damage;
 
-        damageable.ReactToDamage();
+        entity.ReactToDamage();
 
         if (health <= 0)
         {
             health = 0;
 
             //Raise death events
-            damageable.Die();
-
             if (onDeath != null)
             {
                 onDeath.Raise();
             }
+            
+            //React to death event
+            entity.Die();
         }
 
         //Set health bar
@@ -107,9 +107,11 @@ public class Health : MonoBehaviour, IAwaitable
         maxHealth = (int)value;
         healthBar.SetMaxValue(value);
     }
-    
-    void IncreaseOnLevelUp(PlayerUpgrade.LevelStatGroup statGroup)
+
+    void IncreaseOnLevelUp()
     {
+        PlayerUpgrade.LevelStatGroup statGroup = healthStat.GetLevelValue();
+
         if (statGroup.stats.Length != 1)
         {
             Debug.LogError(healthStat.name + " has incorrect number of values");

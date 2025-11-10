@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour, IAwaitable, IDamageable
+public class PlayerController : MonoBehaviour, IAwaitable, IEntity
 {
     [Header("Controls")]
     public InputActionAsset inputActions;
@@ -135,8 +135,10 @@ public class PlayerController : MonoBehaviour, IAwaitable, IDamageable
         moveSpeed = value;
     }
 
-    void OnLevelUp(PlayerUpgrade.LevelStatGroup statGroup)
+    void OnLevelUp()
     {
+        PlayerUpgrade.LevelStatGroup statGroup = speedStats.GetLevelValue();
+
         if (statGroup.stats.Length != 1)
         {
             Debug.LogError(speedStats.name + " has incorrect number of values");

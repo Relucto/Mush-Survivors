@@ -7,9 +7,9 @@ public class PlayerUpgrade : ScriptableObject
     [Header("Display")]
     public string upgradeName = "Upgrade";
     public Sprite displaySprite;
-    //public float[] levelValues;
+    public bool isActive;
     public LevelStatGroup[] levelValueGroup;
-    public event Action<LevelStatGroup> levelUp;
+    public event Action levelUp, requestActivation;
 
     [System.Serializable]
     public class LevelStatGroup
@@ -33,12 +33,22 @@ public class PlayerUpgrade : ScriptableObject
 
     public void IncreaseLevel()
     {
+        //If not already active
+        if (isActive == false)
+        {
+            isActive = true;
+
+            requestActivation?.Invoke();
+
+            return;
+        }
+        
         if (level >= levelValueGroup.Length)
             return;
 
         level++;
 
-        levelUp?.Invoke(GetLevelValue());
+        levelUp?.Invoke();
     }
 
     public LevelStatGroup GetLevelValue()

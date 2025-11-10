@@ -33,8 +33,17 @@ public class LevelUpChoice : MonoBehaviour
         int level = statToUpgrade.GetLevel();
 
         //Set display variables
-        displayText.text = introEffect + statToUpgrade.upgradeName + ": Lvl " + lvlEffect + level + " -> " + (level + 1);
-        displayImage.overrideSprite = statToUpgrade.displaySprite;
+        if (statToUpgrade.isActive)
+        {
+            displayText.text = introEffect + statToUpgrade.upgradeName + ": Lvl " + lvlEffect + level + " -> " + (level + 1);
+            displayImage.overrideSprite = statToUpgrade.displaySprite;
+        }
+        //If this hasn't been unlocked yet
+        else
+        {
+            displayText.text = "<wave>" + introEffect + "NEW WEAPON: " + statToUpgrade.upgradeName;
+            displayImage.overrideSprite = statToUpgrade.displaySprite;
+        }
     }
 
     // Called by button script for each choice

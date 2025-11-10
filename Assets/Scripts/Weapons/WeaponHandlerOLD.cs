@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponHandler : MonoBehaviour
+public class WeaponHandlerOLD : MonoBehaviour
 {
     [System.Serializable]
     public class WeaponEntry

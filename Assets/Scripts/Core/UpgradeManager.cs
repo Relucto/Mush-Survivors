@@ -3,8 +3,18 @@ using UnityEngine;
 
 public class UpgradeManager : MonoBehaviour, IAwaitable
 {
-    public PlayerUpgrade[] playerStats;
+    [Header("Player Upgrades")]
+    public PlayerUpgrade[] playerUpgrades;
 
+    [Header("Weapons")]
+    public int startWeaponIndex;
+    public bool startWithoutWeapons;
+    public PlayerUpgrade[] weaponUpgrades;
+    
+
+    PlayerUpgrade[] playerStats;
+
+    [Header("Misc")]
     public GameObject upgradeScreen;
     public LevelUpChoice[] choiceOptions;
     public bool printDebug;
@@ -15,10 +25,34 @@ public class UpgradeManager : MonoBehaviour, IAwaitable
 
     void Awake()
     {
+        // Build playerStats array (both stat upgrades and weapon upgrades)
+        playerStats = new PlayerUpgrade[playerUpgrades.Length + weaponUpgrades.Length];
+
+        for (int i = 0; i < playerUpgrades.Length; i++)
+        {
+            playerStats[i] = playerUpgrades[i];
+        }
+        for (int i = playerUpgrades.Length, j = 0; i < playerUpgrades.Length + weaponUpgrades.Length; i++, j++)
+        {
+            playerStats[i] = weaponUpgrades[j];
+        }
+
+        // Set all levels to 1
         foreach (PlayerUpgrade stat in playerStats)
         {
+            //print(stat.upgradeName);
             stat.SetLevel(1);
         }
+
+        // Disable all weapons
+        foreach (PlayerUpgrade weapon in weaponUpgrades)
+        {
+            weapon.isActive = false;
+        }
+
+        // Enable selected starting weapon
+        if (!startWithoutWeapons)
+            weaponUpgrades[startWeaponIndex].IncreaseLevel(); // This will activate it
     }
 
     void Start()
@@ -27,15 +61,6 @@ public class UpgradeManager : MonoBehaviour, IAwaitable
     }
 
     public bool IsReady() => isReady;
-
-    // Temporary as FUCK
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            //StartUpgradeScreen();
-        }
-    }
 
     public void StartUpgradeScreen()
     {
@@ -62,8 +87,8 @@ public class UpgradeManager : MonoBehaviour, IAwaitable
 
         foreach (PlayerUpgrade stat in playerStats)
         {
-            // If the stat isn't max level, add it to the list
-            if (stat.IsMaxLevel() == false)
+            // If the stat isn't max level, or if it isn't active, add it to the list
+            if (stat.IsMaxLevel() == false || stat.isActive == false)
             {
                 possibleUpgrades.Add(stat);
             }
