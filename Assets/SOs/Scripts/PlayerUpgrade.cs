@@ -5,11 +5,18 @@ using UnityEngine;
 public class PlayerUpgrade : ScriptableObject
 {
     [Header("Display")]
-    public string upgradeName = "Upgrade";
+    public string upgradeName = "";
     public Sprite displaySprite;
-    public bool isActive;
+    public bool printDebug;
+
+    [Header("Stats")]
+    public UpgradeType type;
     public LevelStatGroup[] levelValueGroup;
+
     public event Action levelUp, requestActivation;
+    
+    [HideInInspector]
+    public bool isActive;
 
     [System.Serializable]
     public class LevelStatGroup
@@ -24,7 +31,37 @@ public class PlayerUpgrade : ScriptableObject
         public float value;
     }
 
+    public enum UpgradeType { PlayerStat, Weapon }
+
     int level = 1;
+
+    void OnEnable()
+    {
+        level = 1;
+
+        if (type == UpgradeType.Weapon)
+        {
+            isActive = false;
+        }
+        else
+        {
+            isActive = true;
+        }
+
+        if (printDebug)
+        {
+            string errorMessage = "";
+
+        if (displaySprite == null)
+            errorMessage += "Missing Sprite! ";
+        if (upgradeName.Equals(""))
+            errorMessage += "Missing Name! ";
+        if (!errorMessage.Equals(""))
+            Debug.LogWarning(name + ": " + errorMessage);
+
+        Debug.Log(name + ": Level " + level);
+        }
+    }
 
     public bool IsMaxLevel()
     {

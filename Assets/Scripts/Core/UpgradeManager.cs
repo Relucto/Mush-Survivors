@@ -37,26 +37,27 @@ public class UpgradeManager : MonoBehaviour, IAwaitable
             playerStats[i] = weaponUpgrades[j];
         }
 
-        // Set all levels to 1
+        // Set all levels to 1 (MAY NOT BE NEEDED!!!!!!!!!!!!!!!!!!!!!!!!!!)
         foreach (PlayerUpgrade stat in playerStats)
         {
             //print(stat.upgradeName);
-            stat.SetLevel(1);
+            //stat.SetLevel(1);
         }
 
-        // Disable all weapons
+        // Disable all weapons (MAY NOT BE NEEDED!!!!!!!!!!!!!!!!!!!!!!!!!!)
         foreach (PlayerUpgrade weapon in weaponUpgrades)
         {
             weapon.isActive = false;
         }
-
-        // Enable selected starting weapon
-        if (!startWithoutWeapons)
-            weaponUpgrades[startWeaponIndex].IncreaseLevel(); // This will activate it
     }
 
     void Start()
     {
+        // Enable selected starting weapon
+        // This needs to be in start, because PlayerUpgrades set isActive = false in OnEnable
+        if (!startWithoutWeapons)
+            weaponUpgrades[startWeaponIndex].IncreaseLevel(); // This will activate it
+
         isReady = true;
     }
 

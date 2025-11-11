@@ -21,9 +21,9 @@ public class InputManager : MonoBehaviour, IAwaitable
     }
 
     public InputActionAsset inputActions;
-    public string mapName, moveName, jumpName;
+    public string mapName, moveName, jumpName, escName;
     InputActionMap playerMap;
-    InputAction moveAction, jumpAction;
+    InputAction moveAction, jumpAction, pauseAction;
 
     bool isReady;
 
@@ -34,6 +34,8 @@ public class InputManager : MonoBehaviour, IAwaitable
         moveAction = playerMap.FindAction(moveName);
 
         jumpAction = playerMap.FindAction(jumpName);
+
+        pauseAction = playerMap.FindAction(escName);
 
         playerMap.Enable();
     }
@@ -59,4 +61,6 @@ public class InputManager : MonoBehaviour, IAwaitable
     {
         return jumpAction.WasPressedThisFrame();
     }
+
+    public bool ReadPause() => pauseAction.WasPressedThisFrame();
 }

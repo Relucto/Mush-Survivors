@@ -1,10 +1,12 @@
-using System;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements.Experimental;
 
 public class EnemyController : MonoBehaviour, IEntity
 {
     public float attackRange;
+    public GameObject xpPrefab;
+    public float xpValue = 10;
 
     Transform playerT;
     NavMeshAgent agent;
@@ -48,7 +50,11 @@ public class EnemyController : MonoBehaviour, IEntity
         if (isDead == false)
         {
             isDead = true;
-            print("I'm EVIL and I died");
+
+            // Spawn xp
+            Instantiate(xpPrefab, transform.position, transform.rotation).GetComponent<XPOrb>().SetXPValue(xpValue);
+
+            Destroy(gameObject);
         }
     }
 }

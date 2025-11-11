@@ -10,20 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e978e8f8f05810b48af70cc5069858fa, type: 3}
-  m_Name: VineStat
+  m_Name: PickupRangeStat
   m_EditorClassIdentifier: 
-  upgradeName: Vine
+  upgradeName: Pickup Range
   displaySprite: {fileID: 0}
-  type: 1
+  printDebug: 0
+  type: 0
   levelValueGroup:
   - stats:
-    - statName: Damage
-      value: 10
-    - statName: Cooldown
-      value: 1.5
-  - stats:
-    - statName: Damage
-      value: 13
-    - statName: Cooldown
-      value: 1.2
+    - statName: Range
+      value: 2.5
   isActive: 1

@@ -74,14 +74,6 @@ public class XPManager : MonoBehaviour
 
     void UpdateXPText()
     {
-        xpText.text = playerXP.ToString("F1") + " / " + requiredXP.ToString("F1");
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            AddXP(10);
-        }
+        xpText.text = playerXP.ToString("F2") + " / " + requiredXP.ToString("F2");
     }
 }

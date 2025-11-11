@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 2755115427308097997}
   m_Layer: 0
   m_Name: AI Agent
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -123,6 +123,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 2
+  xpPrefab: {fileID: 2097778922218070316, guid: 35e940664729ee06c819a8883c52065a, type: 3}
+  xpValue: 10
 --- !u!136 &5391763300349332027
 CapsuleCollider:
   m_ObjectHideFlags: 0

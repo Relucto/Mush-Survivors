@@ -48,15 +48,6 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
         isReady = true;
     }
 
-    //TESTING!!!!!!!!!!!!!!!!!!!!!!!!!1
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            Damage(10);
-        }
-    }
-
     public void Damage(float damage)
     {
         if (health <= 0)
