@@ -43,7 +43,7 @@ public class ProgressBar : MonoBehaviour
         {
             if (currentValue != targetValue)
             {
-                currentValue = Mathf.Lerp(currentValue, targetValue, lerpRate * Time.deltaTime);
+                currentValue = Mathf.Lerp(currentValue, targetValue, lerpRate * Time.unscaledDeltaTime);
 
                 SetBar(currentValue);
 

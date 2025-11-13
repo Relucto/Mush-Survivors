@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class XPManager : MonoBehaviour
+public class XPManager : MonoBehaviour, IAwaitable
 {
     public static XPManager Instance { get; private set; }
 
@@ -15,6 +15,7 @@ public class XPManager : MonoBehaviour
     float playerXP;
     float requiredXP;
     int playerLevel;
+    bool isReady = false;
 
     void Awake()
     {
@@ -38,7 +39,11 @@ public class XPManager : MonoBehaviour
 
         UpdateLevelText();
         UpdateXPText();
+
+        isReady = true;
     }
+
+    public bool IsReady() => isReady;
 
     public void AddXP(float value)
     {
@@ -46,25 +51,34 @@ public class XPManager : MonoBehaviour
 
         if (playerXP >= requiredXP)
         {
-            //Reset player xp
-            playerXP = 0;
+            playerXP = requiredXP;
 
-            //Increase level requirement
-            requiredXP *= subsequentLevelMult;
-            xpBar.SetMaxValue(requiredXP);
+            //Reset player xp
+            //playerXP = 0;
 
             //Increase level
             playerLevel++;
 
             //Change Level text
             UpdateLevelText();
-            
+
             // Call level up event
             onPlayerLevelUp?.Invoke(playerLevel);
         }
 
         UpdateXPText();
         xpBar.SetValue(playerXP);
+    }
+    
+    public void ResetToZero()
+    {
+        playerXP = 0;
+
+        //Increase level requirement
+        requiredXP *= subsequentLevelMult;
+        xpBar.SetMaxValue(requiredXP);
+
+        AddXP(0); // Go through and reset bar and text
     }
 
     void UpdateLevelText()

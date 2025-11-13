@@ -24,6 +24,7 @@ public class DamageDealer : MonoBehaviour
     {
         colliders = GetComponentsInChildren<Collider>();
 
+        // Disable weapon colliers for now. They are enabled in animation
         foreach (Collider collider in colliders)
         {
             collider.enabled = false;
@@ -67,7 +68,6 @@ public class DamageDealer : MonoBehaviour
             IDamageable damageable = collider.GetComponent<IDamageable>();
 
             damageable.Damage(damage);
-            print("Hit Enemy! (" + collider.gameObject.name + ")");
         }
     }
 }

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeName: Crit Chance
   displaySprite: {fileID: 21300000, guid: 6d3452122db74334f8b9138e2fd0f77f, type: 3}
-  isActive: 1
+  printDebug: 0
+  type: 1
   levelValueGroup:
   - stats:
     - statName: Crit Chance
@@ -25,3 +26,4 @@ MonoBehaviour:
   - stats:
     - statName: Crit Chance
       value: 0.1
+  isActive: 1

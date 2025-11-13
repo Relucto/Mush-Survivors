@@ -1,65 +1,111 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Cache")]
+    public Animator fader;
+
+    [Header("Ready Objects")]
     public bool showReadyStatus;
-    public InputManager inputManager;
-    public UpgradeManager upgradeManager;
-    public PlayerController playerController;
-    public Health health;
-    public UIManager uiManager;
 
-    List<MonoBehaviour> readyList = new List<MonoBehaviour>();
+    public ReadyObject[] readyObjects;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [System.Serializable]
+    public struct ReadyObject
+    {
+        [HideInInspector]
+        public string name;
+        public GameObject obj;
+        public MonoBehaviour[] scripts;
+    }
+
+    void OnValidate()
+    {
+        for (int i = 0; i < readyObjects.Length; i++)
+        {
+            if (readyObjects[i].obj == null)
+            {
+                readyObjects[i].name = readyObjects[i].scripts[0].gameObject.name;
+            }
+            else
+            {
+                readyObjects[i].name = readyObjects[i].obj.name;
+            }
+        }
+    }
+
+    void Awake()
+    {
+        //Disable all objects and scripts
+        foreach (ReadyObject entry in readyObjects)
+        {
+            if (entry.obj != null)
+                entry.obj.SetActive(false);
+
+            foreach (MonoBehaviour mono in entry.scripts)
+            {
+                mono.enabled = false;
+            }
+        }
+    }
+
     void Start()
     {
-        UIManager.Instance.PauseGame(false);
-
-        //BuildReadyList();
-
-        //StartCoroutine(ReadyUp());
-    }
-    
-    void BuildReadyList()
-    {
-        readyList.Add(inputManager);
-        readyList.Add(upgradeManager);
-        readyList.Add(playerController);
-        readyList.Add(health);
-        readyList.Add(uiManager);
+        StartCoroutine(ReadyUp());
     }
 
     IEnumerator ReadyUp()
     {
-        foreach (MonoBehaviour script in readyList)
+        // For each entry
+        foreach (ReadyObject entry in readyObjects)
         {
-            float elapsedTime = 0;
-
-            PrintMessage("Starting " + script.GetType().Name);
-            script.enabled = true;
-
-            IAwaitable awaitable = script.GetComponent<IAwaitable>();
-
-            while (!awaitable.IsReady())
+            // Enable object
+            if (entry.obj != null)
+                entry.obj.SetActive(true);
+            
+            // Enable scripts
+            foreach (MonoBehaviour mono in entry.scripts)
             {
-                elapsedTime += Time.deltaTime;
-                if (elapsedTime > 5)
+                PrintMessage("Starting " + mono.GetType().Name);
+
+                // Make sure it has the IAwaitable component
+                if (mono.TryGetComponent(out IAwaitable awaitable))
                 {
-                    Debug.LogWarning(script.GetType().Name + " is taking a while to start...");
-                    break;
+                    mono.enabled = true;
+
+                    float elapsedTime = 0;
+
+                    // Wait for it to be ready
+                    do
+                    {
+                        elapsedTime += Time.deltaTime;
+
+                        if (elapsedTime > 5)
+                        {
+                            Debug.LogWarning($"{mono.GetType().Name} is taking longer than expected... ({awaitable.IsReady()})");
+                        }
+
+                        yield return null;
+                    } while (awaitable.IsReady() == false);
+
+                    PrintMessage($"{mono.GetType().Name} is ready.");
                 }
-
-                yield return null;
+                else
+                {
+                    Debug.LogError($"{mono.GetType().Name}.cs does not contain IAwaitable on GameObject: {entry.obj.name}!");
+                    Debug.Break();
+                }
             }
-
-            PrintMessage(script.GetType().Name + " is ready");
         }
 
-        PrintMessage("Everything is ready");
+        PrintMessage("Everything is ready!");
+
+        UIManager.Instance.PauseGame(false); // Hides mouse cursor
+
+        fader.Play("FadeIn", -1, 0);
+
+        yield return new WaitForSeconds(1); // Wait for fade in
+        PlayerController.isActive = true; // Enable player control
     }
     
     void PrintMessage(string message)

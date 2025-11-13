@@ -4,10 +4,10 @@ using UnityEngine.UI;
 
 public class LevelUpChoice : MonoBehaviour
 {
-    [SerializeField] TMP_Text displayText;
+    [SerializeField] TMP_Text nameText, levelText;
     [SerializeField] Image displayImage;
     [SerializeField] Sprite defaultSprite;
-    [SerializeField] string defaultText, introEffect, lvlEffect;
+    [SerializeField] string defaultName, defaultDescription, introEffect, lvlEffect;
     [SerializeField] int healthIncreaseIfEmpty;
     [SerializeField] Health playerHealth;
     PlayerUpgrade statToUpgrade;
@@ -22,7 +22,8 @@ public class LevelUpChoice : MonoBehaviour
 
             print("There's an empty one, have some health instead :)");
 
-            displayText.text = introEffect + defaultText;
+            nameText.text = introEffect + defaultName;
+            levelText.text = introEffect + defaultDescription;
             displayImage.overrideSprite = defaultSprite;
 
             return;
@@ -35,13 +36,15 @@ public class LevelUpChoice : MonoBehaviour
         //Set display variables
         if (statToUpgrade.isActive)
         {
-            displayText.text = introEffect + statToUpgrade.upgradeName + ": Lvl " + lvlEffect + level + " -> " + (level + 1);
+            nameText.text = introEffect + statToUpgrade.upgradeName;
+            levelText.text = introEffect + "Level " + lvlEffect + level + " -> " + (level + 1);
             displayImage.overrideSprite = statToUpgrade.displaySprite;
         }
         //If this hasn't been unlocked yet
         else
         {
-            displayText.text = "<wave>" + introEffect + "NEW WEAPON: " + statToUpgrade.upgradeName;
+            nameText.text = introEffect + statToUpgrade.upgradeName;
+            levelText.text = introEffect + "<wave><palette>NEW!";
             displayImage.overrideSprite = statToUpgrade.displaySprite;
         }
     }
@@ -60,6 +63,8 @@ public class LevelUpChoice : MonoBehaviour
             //Give health instead
             playerHealth.Heal(healthIncreaseIfEmpty);
         }
+
+        XPManager.Instance.ResetToZero();
         
         UIManager.Instance.PauseGame(false);
     }

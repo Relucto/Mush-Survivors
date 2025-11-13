@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponStats: {fileID: 11400000, guid: acebdca4b74df6241a9f527679d4fb45, type: 2}
-  attackAnimation: WIP_Wip
   weaponAnimator: {fileID: 4613928171826387364}
+  printDebug: 0
 --- !u!1001 &5023521295546138927
 PrefabInstance:
   m_ObjectHideFlags: 0

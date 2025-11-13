@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
     public Animator playerModelAnimator;
     public string walkBool, jumpTrigger;
 
+    [HideInInspector]
+    public static bool isActive = false;
+
     Vector3 playerVelocity;
     Transform mainCamera;
     CharacterController controller;
@@ -48,6 +51,9 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
 
     void Update()
     {
+        if (isActive == false)
+            return;
+            
         if (controller.isGrounded && playerVelocity.y < 0)
         {
             playerVelocity.y = 0f;

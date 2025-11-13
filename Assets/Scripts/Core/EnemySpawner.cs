@@ -1,17 +1,19 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour, IAwaitable
 {
     public GameObject enemyPrefab;
     public Transform spawnLocation;
 
-    bool spawning;
+    bool spawning, isReady;
 
     void Start()
     {
-
+        isReady = true;
     }
+
+    public bool IsReady() => isReady;
 
     void Update()
     {
@@ -31,11 +33,11 @@ public class EnemySpawner : MonoBehaviour
         spawning = true;
 
         StartCoroutine(Spawning());
-
-        IEnumerator Spawning()
-        {
-            Debug.LogWarning("I'm not set up yet");
-            yield return null;
-        }
+    }
+    
+    IEnumerator Spawning()
+    {
+        Debug.LogWarning("I'm not set up yet (" + name + ")");
+        yield return null;
     }
 }
