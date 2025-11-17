@@ -80,10 +80,10 @@ public class SporeBulletLauncher : MonoBehaviour
         // Set data
         SporeBullet sporeBullet = bullet.GetComponent<SporeBullet>();
         sporeBullet.direction = moveDirection;
-        sporeBullet.pool = pool;
 
         Projectile projectile = bullet.GetComponent<Projectile>();
         projectile.damage = damage;
+        projectile.pool = pool;
     }
 
     void SetStats()

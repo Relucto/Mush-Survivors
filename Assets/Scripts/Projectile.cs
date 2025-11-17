@@ -3,11 +3,23 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public Allegiance allegiance;
+    public float lifetime;
 
     [HideInInspector] public float damage;
+    [HideInInspector] public Pool pool;
     string tagToDamage;
+    float currentLifetime;
 
     public enum Allegiance { Friend, Foe }
+
+    bool returned = false;
+
+    void OnEnable()
+    {
+        returned = false;
+
+        currentLifetime = lifetime;
+    }
 
     void Start()
     {
@@ -26,13 +38,31 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (currentLifetime < 0)
+        {
+            ReturnObject();
+        }
+
+        currentLifetime -= Time.deltaTime;
+    }
+
     void OnTriggerEnter(Collider collider)
     {
         if (collider.CompareTag(tagToDamage))
         {
             collider.GetComponent<IDamageable>().Damage(damage);
+            ReturnObject();
         }
+    }
 
-        Destroy(gameObject);
+    void ReturnObject()
+    {
+        if (!returned)
+        {
+            returned = true;
+            pool.Return(gameObject);
+        }
     }
 }

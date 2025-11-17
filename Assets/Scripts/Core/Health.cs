@@ -4,12 +4,14 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
 {
     public int maxHealth;
     public ProgressBar healthBar;
+    public float damageIndicatorYOffset = 1;
     public MonoBehaviour controllerScript;
     public GameEvent onDeath; //Used to broadcast publicly
     public PlayerUpgrade healthStat;
 
     int health;
     IEntity entity;
+    Vector3 spawnIndicatorOffset;
 
     bool isReady;
     public bool IsReady() => isReady;
@@ -45,6 +47,8 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
             healthBar.SetValue(maxHealth);
         }
 
+        spawnIndicatorOffset.y = damageIndicatorYOffset;
+
         isReady = true;
     }
 
@@ -54,6 +58,10 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
             return;
 
         health -= (int)damage;
+
+        // Spawn damage indicator
+        GameObject indicator = DamageIndicatorManager.Instance.SpawnIndicator(healthBar.transform.position + spawnIndicatorOffset);
+        indicator.GetComponent<DamageIndicator>().SetValue(damage);
 
         entity.ReactToDamage();
 
