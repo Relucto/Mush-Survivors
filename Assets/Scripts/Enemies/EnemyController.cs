@@ -1,17 +1,19 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements.Experimental;
 
 public class EnemyController : MonoBehaviour, IEntity
 {
     public float attackRange;
+    public float attackCooldown;
     public GameObject xpPrefab;
     public float xpValue = 10;
+    public Animator anim;
+    public Material material;
 
     Transform playerT;
     NavMeshAgent agent;
-    Animator anim;
-
+    float currentCooldown;
+    
     bool isDead;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -19,7 +21,6 @@ public class EnemyController : MonoBehaviour, IEntity
     {
         playerT = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
-        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -27,13 +28,31 @@ public class EnemyController : MonoBehaviour, IEntity
     {
         agent.destination = playerT.position;
 
-        if (agent.remainingDistance <= agent.stoppingDistance)
+        float distance = agent.remainingDistance;
+
+        // ==================
+        // Movement Animation
+
+        anim.SetBool("Moving", distance > agent.stoppingDistance ? true : false);
+
+        // ==================
+        // Attack Animation
+
+        // If within attack range
+        if (distance <= attackRange)
         {
-            anim.SetBool("Attacking", true);
+            // If off of cooldown, attack
+            if (currentCooldown < 0)
+            {
+                anim.SetTrigger("Attacking");
+                currentCooldown = attackCooldown;
+            }
         }
-        else
+
+        // Reduce cooldown if not attacking
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attacking") == false)
         {
-            anim.SetBool("Attacking", false);
+            currentCooldown -= Time.deltaTime;
         }
     }
 

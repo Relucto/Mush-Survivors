@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Animator))]
-public class DamageDealer : MonoBehaviour
+public class MeleeAttack : MonoBehaviour
 {
     public PlayerUpgrade weaponStats;
 
@@ -65,9 +65,7 @@ public class DamageDealer : MonoBehaviour
     {
         if (collider.gameObject.CompareTag("Enemy"))
         {
-            IDamageable damageable = collider.GetComponent<IDamageable>();
-
-            damageable.Damage(damage);
+            collider.GetComponent<IDamageable>().Damage(damage);
         }
     }
 }

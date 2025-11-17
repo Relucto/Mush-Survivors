@@ -6,8 +6,7 @@ public class UpgradeManager : MonoBehaviour, IAwaitable
     [Header("Player Upgrades")]
     public PlayerUpgrade[] playerUpgrades;
 
-    [Header("Weapons")]
-    public int startWeaponIndex;
+    [Header("Weapons (first in list is the starting weapon)")]
     public bool startWithoutWeapons;
     public PlayerUpgrade[] weaponUpgrades;
     
@@ -55,8 +54,8 @@ public class UpgradeManager : MonoBehaviour, IAwaitable
     {
         // Enable selected starting weapon
         // This needs to be in start, because PlayerUpgrades set isActive = false in OnEnable
-        if (!startWithoutWeapons)
-            weaponUpgrades[startWeaponIndex].IncreaseLevel(); // This will activate it
+        if (!startWithoutWeapons && weaponUpgrades.Length > 0)
+            weaponUpgrades[0].IncreaseLevel(); // This will activate it
 
         isReady = true;
     }
