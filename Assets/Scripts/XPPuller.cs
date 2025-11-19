@@ -5,7 +5,6 @@ public class XPPuller : MonoBehaviour
 {
     public PlayerUpgrade pickupStats;
     public SphereCollider pickupCollider;
-    public float suckSpeed;
 
     float radius;
 
@@ -33,20 +32,7 @@ public class XPPuller : MonoBehaviour
     {
         if (collider.gameObject.CompareTag("XP"))
         {
-            if (!pulledObjects.Contains(collider.transform))
-            {
-                pulledObjects.Add(collider.transform);
-            }
-        }
-    }
-    
-    void Update()
-    {
-        float step = suckSpeed * Time.deltaTime;
-
-        foreach (Transform xp in pulledObjects)
-        {
-            xp.position = Vector3.MoveTowards(xp.position, transform.position, step);
+            collider.GetComponent<XPOrb>().EnableMove();
         }
     }
 }

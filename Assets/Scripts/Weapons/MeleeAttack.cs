@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -7,8 +8,8 @@ public class MeleeAttack : MonoBehaviour
     public PlayerUpgrade weaponStats;
 
     Collider[] colliders;
-
     float damage;
+    List<Collider> alreadyDamaged = new List<Collider>();
 
     void OnEnable()
     {
@@ -59,13 +60,19 @@ public class MeleeAttack : MonoBehaviour
         {
             collider.enabled = false;
         }
+        
+        alreadyDamaged.Clear();
     }
 
     void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.CompareTag("Enemy"))
         {
+            if (alreadyDamaged.Contains(collider))
+                return;
+
             collider.GetComponent<IDamageable>().Damage(damage);
+            alreadyDamaged.Add(collider);
         }
     }
 }

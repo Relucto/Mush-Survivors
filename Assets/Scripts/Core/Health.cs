@@ -60,7 +60,7 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
         health -= (int)damage;
 
         // Spawn damage indicator
-        GameObject indicator = DamageIndicatorManager.Instance.SpawnIndicator(healthBar.transform.position + spawnIndicatorOffset);
+        GameObject indicator = DamageIndicatorManager.Instance.SpawnIndicator(transform.position + spawnIndicatorOffset);
         indicator.GetComponent<DamageIndicator>().SetValue(damage);
 
         entity.ReactToDamage();

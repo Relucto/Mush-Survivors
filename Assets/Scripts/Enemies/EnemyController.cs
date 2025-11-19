@@ -3,21 +3,28 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour, IEntity
 {
+    [Header("Stats")]
     public float attackRange;
     public float attackCooldown;
-    public GameObject xpPrefab;
-    public float xpValue = 10;
-    public Animator anim;
-    public Material material;
     public float knockbackForce = 5;
     public float stunDuration;
+    public float xpValue = 10;
+
+    [Header("Priority Settings")]
+    public float farthestPriorityDistance = 50;
+
+    [Header("Cache")]
+    public Animator anim;
+    public Material material;
+    public GameObject xpPrefab;
 
     Transform playerT;
     NavMeshAgent agent;
     Rigidbody rb;
-    float currentCooldown, currentStunDuration;
+    Vector3 LookAtTarget;
+    float currentCooldown, currentStunDuration, distance;
     
-    bool isDead, isStunned;
+    bool isDead, isStunned, isMoving;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,7 +39,7 @@ public class EnemyController : MonoBehaviour, IEntity
     {
         if (isStunned)
         {
-            if (stunDuration < 0)
+            if (currentStunDuration < 0)
             {
                 isStunned = false;
                 rb.isKinematic = true;
@@ -40,22 +47,33 @@ public class EnemyController : MonoBehaviour, IEntity
                 agent.enabled = true;
             }
 
-            stunDuration -= Time.deltaTime;
+            currentStunDuration -= Time.deltaTime;
 
             return;
         }
 
         agent.destination = playerT.position;
 
-        float distance = agent.remainingDistance;
+        distance = agent.remainingDistance;
+        isMoving = distance > agent.stoppingDistance ? true : false;
+
+        if (isMoving) // Adjust priority
+        {
+            // Set priority. Closer = higher priority
+            agent.avoidancePriority = (int)Remap(distance, agent.stoppingDistance, farthestPriorityDistance, 1, 300);
+        }
+        else // Look at player
+        {
+            Vector3 lookPos = agent.destination - transform.position;
+            lookPos.y = 0;
+            Quaternion rotation = Quaternion.LookRotation(lookPos);
+            transform.rotation = rotation;
+        }
 
         // ==================
-        // Movement Animation
+        // Animation
 
-        anim.SetBool("Moving", distance > agent.stoppingDistance ? true : false);
-
-        // ==================
-        // Attack Animation
+        anim.SetBool("Moving", isMoving);
 
         // If within attack range
         if (distance <= attackRange)
@@ -104,5 +122,10 @@ public class EnemyController : MonoBehaviour, IEntity
 
             Destroy(gameObject);
         }
+    }
+
+    float Remap(float s, float a1, float a2, float b1, float b2) 
+    { 
+        return b1 + (s-a1)*(b2-b1)/(a2-a1); 
     }
 }
