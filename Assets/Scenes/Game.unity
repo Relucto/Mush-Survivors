@@ -2876,7 +2876,7 @@ MonoBehaviour:
   playerUpgrades:
   - {fileID: 11400000, guid: 9340169b298347245be4e067100a6d44, type: 2}
   - {fileID: 11400000, guid: 72075aa9b3d7d164dac849b849b49b75, type: 2}
-  startWithoutWeapons: 1
+  startWithoutWeapons: 0
   weaponUpgrades:
   - {fileID: 11400000, guid: acebdca4b74df6241a9f527679d4fb45, type: 2}
   - {fileID: 11400000, guid: 68c4955a3fedb6238833f5f62bbc3fde, type: 2}
@@ -3825,6 +3825,10 @@ PrefabInstance:
     - target: {fileID: 6115718424041955589, guid: f1fc84a202bf32b4495c750d3ed663bf, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7460695949502682218, guid: f1fc84a202bf32b4495c750d3ed663bf, type: 3}
+      propertyPath: m_Damping
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7567067513939883626, guid: f1fc84a202bf32b4495c750d3ed663bf, type: 3}
       propertyPath: m_IsActive
