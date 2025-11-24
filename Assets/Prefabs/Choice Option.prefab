@@ -731,7 +731,7 @@ MonoBehaviour:
   nameText: {fileID: 5437928434915737697}
   levelText: {fileID: 2286036254522243714}
   displayImage: {fileID: 1354983151800590246}
-  defaultSprite: {fileID: 21300000, guid: b0b8564739c15e54899fd165bc2e2fe5, type: 3}
+  defaultSprite: {fileID: 21300000, guid: 307dc6411dad46d49b781366020d0218, type: 3}
   defaultName: Heal
   defaultDescription: Heal for 25 health!
   introEffect: <+spread>

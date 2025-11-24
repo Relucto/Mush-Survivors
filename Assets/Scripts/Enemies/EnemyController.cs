@@ -4,7 +4,6 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour, IEntity
 {
     [Header("Stats")]
-    public float attackRange;
     public float attackCooldown;
     public float knockbackForce = 5;
     public float stunDuration;
@@ -17,21 +16,18 @@ public class EnemyController : MonoBehaviour, IEntity
     public Animator anim;
     public Material material;
     public GameObject xpPrefab;
+    public NavMeshAgent agent;
+    public Rigidbody rb;
 
-    Transform playerT;
-    NavMeshAgent agent;
-    Rigidbody rb;
+    [HideInInspector] public Transform playerT;
     Vector3 LookAtTarget;
     float currentCooldown, currentStunDuration, distance;
     
     bool isDead, isStunned, isMoving;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerT = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        agent = GetComponent<NavMeshAgent>();
-        rb = GetComponent<Rigidbody>();
+        isStunned = false;
     }
 
     // Update is called once per frame
@@ -51,6 +47,9 @@ public class EnemyController : MonoBehaviour, IEntity
 
             return;
         }
+
+        if (!agent.isActiveAndEnabled)
+            return;
 
         agent.destination = playerT.position;
 
@@ -76,7 +75,7 @@ public class EnemyController : MonoBehaviour, IEntity
         anim.SetBool("Moving", isMoving);
 
         // If within attack range
-        if (distance <= attackRange)
+        if (distance <= agent.stoppingDistance + 0.1f)
         {
             // If off of cooldown, attack
             if (currentCooldown < 0)
@@ -116,6 +115,8 @@ public class EnemyController : MonoBehaviour, IEntity
         if (isDead == false)
         {
             isDead = true;
+
+            EnemySpawner.numEnemies--;
 
             // Spawn xp
             Instantiate(xpPrefab, transform.position, transform.rotation).GetComponent<XPOrb>().SetXPValue(xpValue);

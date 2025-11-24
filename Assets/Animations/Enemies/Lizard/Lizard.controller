@@ -21,7 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: d15a7f73e767020c3a28444dbef56eeb, type: 2}
+  m_Motion: {fileID: 7400000, guid: 609bca945370f26498a44f1cb4215456, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -73,7 +73,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: f13710ced934a654b8cd92f00c757ee6, type: 2}
+  m_Motion: {fileID: 7400000, guid: 3b6dd079496ba634bb1d2e8f04666f64, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -230,7 +230,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 9417241a558d886f682aa9476ef77545, type: 2}
+  m_Motion: {fileID: 7400000, guid: 0f14d08917091434b97d1376cb121cf6, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -242,7 +242,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Rock Elemental
+  m_Name: Lizard
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Moving

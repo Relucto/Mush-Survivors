@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: HealthStat
   m_EditorClassIdentifier: 
   upgradeName: Health
-  displaySprite: {fileID: 21300000, guid: 87a926b94d97cde42857e050badbc4c5, type: 3}
+  displaySprite: {fileID: 21300000, guid: 307dc6411dad46d49b781366020d0218, type: 3}
+  printDebug: 0
+  type: 0
   levelValueGroup:
   - stats:
     - statName: Health
@@ -24,3 +26,4 @@ MonoBehaviour:
   - stats:
     - statName: Health
       value: 170
+  isActive: 1

@@ -147,7 +147,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7990338629259969995}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: -1372625422
   m_Radius: 1
   m_Speed: 2.4
@@ -201,6 +201,9 @@ MonoBehaviour:
   anim: {fileID: 4374972544105601682}
   material: {fileID: 2100000, guid: 773fa9441869514b19dadd73ee5b9e87, type: 2}
   xpPrefab: {fileID: 2097778922218070316, guid: 35e940664729ee06c819a8883c52065a, type: 3}
+  agent: {fileID: 6939740350258203083}
+  rb: {fileID: 5261130592580183615}
+  playerT: {fileID: 0}
 --- !u!136 &5617812719410602701
 CapsuleCollider:
   m_ObjectHideFlags: 0

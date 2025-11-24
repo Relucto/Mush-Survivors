@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: SpeedStat
   m_EditorClassIdentifier: 
   upgradeName: Speed
-  displaySprite: {fileID: 21300000, guid: 484987ee4dc341d43ad81e31c171faac, type: 3}
-  isActive: 1
+  displaySprite: {fileID: 21300000, guid: 9240ac068cd42cc4ab15d120c3b6db6d, type: 3}
+  printDebug: 0
+  type: 0
   levelValueGroup:
   - stats:
     - statName: Speed
@@ -28,3 +29,4 @@ MonoBehaviour:
   - stats:
     - statName: Speed
       value: 8
+  isActive: 1
