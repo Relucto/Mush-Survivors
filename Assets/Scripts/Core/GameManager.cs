@@ -1,9 +1,17 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public Animator fader;
+    public TMP_Text timer;
+    public PlayerController playerController;
+    public EnemySpawner spawner;
+    public GameObject deathScreen;
+    public WeaponAnimator vine;
+    public SporeBulletLauncher sporeLauncher;
 
     [Header("Ready Objects")]
     public bool showReadyStatus;
@@ -19,6 +27,11 @@ public class GameManager : MonoBehaviour
         public MonoBehaviour[] scripts;
     }
 
+    float currentSeconds;
+    int seconds, minutes;
+    string displaySeconds, displayMinutes;
+    bool timerActive;
+
     void OnValidate()
     {
         for (int i = 0; i < readyObjects.Length; i++)
@@ -30,6 +43,11 @@ public class GameManager : MonoBehaviour
             else
             {
                 readyObjects[i].name = readyObjects[i].obj.name;
+            }
+            
+            foreach (MonoBehaviour mono in readyObjects[i].scripts)
+            {
+                mono.enabled = false;
             }
         }
     }
@@ -51,6 +69,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        currentSeconds = 0;
+        timerActive = false;
+
         StartCoroutine(ReadyUp());
     }
 
@@ -66,7 +87,7 @@ public class GameManager : MonoBehaviour
             // Enable scripts
             foreach (MonoBehaviour mono in entry.scripts)
             {
-                PrintMessage("Starting " + mono.GetType().Name);
+                PrintReadyMessage("Starting " + mono.GetType().Name);
 
                 // Make sure it has the IAwaitable component
                 if (mono.TryGetComponent(out IAwaitable awaitable))
@@ -88,7 +109,7 @@ public class GameManager : MonoBehaviour
                         yield return null;
                     } while (awaitable.IsReady() == false);
 
-                    PrintMessage($"{mono.GetType().Name} is ready.");
+                    PrintReadyMessage($"{mono.GetType().Name} is ready.");
                 }
                 else
                 {
@@ -98,19 +119,82 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        PrintMessage("Everything is ready!");
+        PrintReadyMessage("Everything is ready!");
 
         UIManager.Instance.PauseGame(false); // Hides mouse cursor
 
         fader.Play("FadeIn", -1, 0);
 
         yield return new WaitForSeconds(1); // Wait for fade in
+
+        StartEverything();
+    }
+
+    void StartEverything()
+    {
         PlayerController.isActive = true; // Enable player control
+
+        timerActive = true;
+
+        spawner.StartSpawning();
     }
     
-    void PrintMessage(string message)
+    void PrintReadyMessage(string message)
     {
         if (showReadyStatus)
             print(message);
+    }
+
+    void Update()
+    {
+        if (timerActive)
+        {
+            UpdateTimer();
+        }
+    }
+
+    void UpdateTimer()
+    {
+        currentSeconds += Time.deltaTime;
+
+        seconds = (int)currentSeconds;
+        
+        if (currentSeconds >= 60)
+        {
+            currentSeconds = 0;
+            minutes++;
+        }
+
+        displayMinutes = minutes < 10 ? "0" + minutes.ToString() : minutes.ToString();
+        displaySeconds = currentSeconds < 10 ? "0" + seconds.ToString() : seconds.ToString();
+
+        timer.text = displayMinutes + ":" + displaySeconds;
+    }
+
+    public void OnPlayerDeath()
+    {
+        spawner.StopSpawning();
+        playerController.enabled = false;
+        timerActive = false;
+
+        // Stop all weapons
+        vine.DisableSelf();
+        sporeLauncher.DisableSelf();
+
+        // Enable death screen
+        deathScreen.SetActive(true);
+
+        StartCoroutine(FadeOut());
+
+        IEnumerator FadeOut()
+        {
+            yield return new WaitForSeconds(3);
+
+            fader.Play("FadeOut");
+
+            yield return new WaitForSeconds(1.5f);
+
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 }

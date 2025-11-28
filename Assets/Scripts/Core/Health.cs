@@ -72,9 +72,6 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
         
         float finalDamage = damage * (1 - armor);
 
-        if (gameObject.tag == "Player")
-            print($"Damaging for {damage} * (1 - {armor}) = {finalDamage}");
-
         health -= finalDamage;
 
         damageIndicatorSpawn = gameObject.CompareTag("Player") ? transform.position : healthBar.transform.position;

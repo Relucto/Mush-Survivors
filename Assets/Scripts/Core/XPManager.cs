@@ -15,7 +15,7 @@ public class XPManager : MonoBehaviour, IAwaitable
     float playerXP;
     float requiredXP;
     int playerLevel;
-    bool isReady = false;
+    bool isReady = false, isActive;
 
     void Awake()
     {
@@ -40,6 +40,8 @@ public class XPManager : MonoBehaviour, IAwaitable
         UpdateLevelText();
         UpdateXPText();
 
+        isActive = true;
+
         isReady = true;
     }
 
@@ -47,6 +49,9 @@ public class XPManager : MonoBehaviour, IAwaitable
 
     public void AddXP(float value)
     {
+        if (!isActive)
+            return;
+            
         playerXP += value;
 
         if (playerXP >= requiredXP)
@@ -90,4 +95,6 @@ public class XPManager : MonoBehaviour, IAwaitable
     {
         xpText.text = playerXP.ToString("F2") + " / " + requiredXP.ToString("F2");
     }
+
+    public void Stop() => isActive = false;
 }

@@ -6,8 +6,6 @@ public class WeaponHandler : MonoBehaviour
     
     static float critChance, critDamage;
 
-    bool isReady = false;
-
     void OnEnable()
     {
         critChanceStats.levelUp += LevelUpCritChance;
@@ -24,8 +22,6 @@ public class WeaponHandler : MonoBehaviour
     {
         SetCritChance(critChanceStats.GetLevelValue().stats[0].value);
         SetCritDamage(critDamageStats.GetLevelValue().stats[0].value);
-
-        isReady = true;
     }
 
     void SetCritChance(float value) => critChance = value;

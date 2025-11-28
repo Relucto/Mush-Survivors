@@ -36,6 +36,12 @@ public class SporeBulletLauncher : MonoBehaviour
         spinAnim.enabled = true;
     }
 
+    public void DisableSelf()
+    {
+        isActive = false;
+        spinAnim.enabled = false;
+    }
+
     void Start()
     {
         SetStats();

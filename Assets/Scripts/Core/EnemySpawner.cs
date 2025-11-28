@@ -5,6 +5,7 @@ using UnityEngine.AI;
 public class EnemySpawner : MonoBehaviour, IAwaitable
 {
     public int maxEnemies = 50;
+    public float waitTime = 0.5f;
     [HideInInspector] public static int numEnemies = 0;
     public EnemyType[] enemies;
     //public GameObject enemyPrefab;
@@ -121,10 +122,19 @@ public class EnemySpawner : MonoBehaviour, IAwaitable
 
         StartCoroutine(Spawning());
     }
+
+    public void StopSpawning()
+    {
+        spawning = false;
+    }
     
     IEnumerator Spawning()
     {
-        Debug.LogWarning("I'm not set up yet (" + name + ")");
-        yield return null;
+        while (spawning)
+        {
+            SpawnEnemy();
+            
+            yield return new WaitForSeconds(waitTime);
+        }
     }
 }
