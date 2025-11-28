@@ -502,7 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9450bc688368552469b40cb808266b51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 5
+  attackDamage: 50
   attackCollider: {fileID: 3359834806888079133}
 --- !u!135 &3359834806888079133
 SphereCollider:

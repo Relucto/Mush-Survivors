@@ -19,12 +19,12 @@ MonoBehaviour:
   levelValueGroup:
   - stats:
     - statName: Damage
-      value: 10
+      value: 40
     - statName: Cooldown
       value: 1.5
   - stats:
     - statName: Damage
-      value: 13
+      value: 60
     - statName: Cooldown
       value: 1.2
   isActive: 1

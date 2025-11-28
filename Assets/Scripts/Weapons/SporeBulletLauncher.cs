@@ -78,12 +78,14 @@ public class SporeBulletLauncher : MonoBehaviour
         Vector3 moveDirection = pos2 - pos1;
 
         // Set data
-        SporeBullet sporeBullet = bullet.GetComponent<SporeBullet>();
-        sporeBullet.direction = moveDirection;
+        //SporeBullet sporeBullet = bullet.GetComponent<SporeBullet>();
+        //sporeBullet.direction = moveDirection;
 
         Projectile projectile = bullet.GetComponent<Projectile>();
-        projectile.damage = damage;
+        projectile.direction = moveDirection;
+        projectile.SetDamage(damage);
         projectile.pool = pool;
+        projectile.allegiance = Projectile.Allegiance.Friend;
     }
 
     void SetStats()

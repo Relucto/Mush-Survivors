@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public Allegiance allegiance;
+    public float moveSpeed;
     public float lifetime;
 
-    [HideInInspector] public float damage;
     [HideInInspector] public Pool pool;
+    [HideInInspector] public Allegiance allegiance;
+    [HideInInspector] public Vector3 direction;
+    float damage;
     string tagToDamage;
     float currentLifetime;
 
@@ -19,10 +21,7 @@ public class Projectile : MonoBehaviour
         returned = false;
 
         currentLifetime = lifetime;
-    }
 
-    void Start()
-    {
         switch (allegiance)
         {
             case Allegiance.Friend:
@@ -46,6 +45,13 @@ public class Projectile : MonoBehaviour
         }
 
         currentLifetime -= Time.deltaTime;
+
+        transform.Translate(direction * moveSpeed * Time.deltaTime);
+    }
+
+    public void SetDamage(float value)
+    {
+        damage = allegiance == Allegiance.Friend ? value + WeaponHandler.CritDamage() : value;
     }
 
     void OnTriggerEnter(Collider collider)

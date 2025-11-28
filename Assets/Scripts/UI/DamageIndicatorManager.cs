@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class DamageIndicatorManager : MonoBehaviour
 {
+    [Header("Gradient")]
+    public Gradient damageGradient;
+    public float damageLow;
+    public float damageHigh;
+
+    [Header("Pool")]
     public GameObject prefab;
     public Transform poolParent;
     public int startSize, maxSize;
@@ -27,11 +33,13 @@ public class DamageIndicatorManager : MonoBehaviour
         pool = new Pool(prefab, startSize, maxSize, poolParent);
     }
 
-    public GameObject SpawnIndicator(Vector3 spawnPoint)
+    public void SpawnIndicator(Vector3 spawnPoint, float value)
     {
-        GameObject indicator = pool.Get();
-        indicator.transform.position = spawnPoint;
-        return indicator;
+        GameObject obj = pool.Get();
+        obj.transform.position = spawnPoint;
+
+        DamageIndicator indicator = obj.GetComponent<DamageIndicator>();
+        indicator.SetValue(value, damageGradient.Evaluate(Mathf.InverseLerp(damageLow, damageHigh, value)));
     }
 
     public void ReturnIndicator(GameObject obj)

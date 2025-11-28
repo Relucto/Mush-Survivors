@@ -19,3 +19,8 @@ public interface IAwaitable
 {
     bool IsReady();
 }
+
+public interface IUpdateManageable
+{
+    void ManagedUpdate();
+}

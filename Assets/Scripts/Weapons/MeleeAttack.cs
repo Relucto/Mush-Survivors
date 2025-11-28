@@ -71,7 +71,7 @@ public class MeleeAttack : MonoBehaviour
             if (alreadyDamaged.Contains(collider))
                 return;
 
-            collider.GetComponent<IDamageable>().Damage(damage);
+            collider.GetComponent<IDamageable>().Damage(damage + WeaponHandler.CritDamage());
             alreadyDamaged.Add(collider);
         }
     }

@@ -82,6 +82,7 @@ MonoBehaviour:
   controllerScript: {fileID: 4455278977758516431}
   onDeath: {fileID: 11400000, guid: dbd193432d249e547b7e35dfc499937c, type: 2}
   healthStat: {fileID: 11400000, guid: 9340169b298347245be4e067100a6d44, type: 2}
+  armorStat: {fileID: 11400000, guid: 205c6102e2f45df7e8b2af31bd38baa6, type: 2}
 --- !u!114 &4455278977758516431
 MonoBehaviour:
   m_ObjectHideFlags: 0

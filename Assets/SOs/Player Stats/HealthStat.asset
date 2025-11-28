@@ -19,11 +19,11 @@ MonoBehaviour:
   levelValueGroup:
   - stats:
     - statName: Health
-      value: 100
+      value: 1000
   - stats:
     - statName: Health
-      value: 130
+      value: 1300
   - stats:
     - statName: Health
-      value: 170
+      value: 1700
   isActive: 1

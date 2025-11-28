@@ -174,12 +174,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf6b990a8f80ce849ad21656dbdca7df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 150
   healthBar: {fileID: 1492128653933484169}
   damageIndicatorYOffset: 0.5
   controllerScript: {fileID: 9023481333384908171}
   onDeath: {fileID: 11400000, guid: 2e3f6b1101e682b44b17612b7e03d25a, type: 2}
   healthStat: {fileID: 0}
+  armorStat: {fileID: 0}
 --- !u!114 &9023481333384908171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +193,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c8e54d69f753c44d994c8b7df6fe140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 3
   attackCooldown: 2
   knockbackForce: 1
   stunDuration: 0.25
@@ -660,7 +660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9450bc688368552469b40cb808266b51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 5
+  attackDamage: 50
   attackCollider: {fileID: 3058404873456692608}
 --- !u!135 &3058404873456692608
 SphereCollider:

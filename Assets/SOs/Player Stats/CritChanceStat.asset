@@ -15,15 +15,15 @@ MonoBehaviour:
   upgradeName: Crit Chance
   displaySprite: {fileID: 21300000, guid: 2d969d1ebab47d844a6ea18a63fd9133, type: 3}
   printDebug: 0
-  type: 1
+  type: 0
   levelValueGroup:
   - stats:
-    - statName: Crit Chance
-      value: 0.03
+    - statName: Crit Chance %
+      value: 3
   - stats:
-    - statName: Crit Chance
-      value: 0.06
+    - statName: Crit Chance %
+      value: 6
   - stats:
-    - statName: Crit Chance
-      value: 0.1
-  isActive: 0
+    - statName: Crit Chance %
+      value: 10
+  isActive: 1

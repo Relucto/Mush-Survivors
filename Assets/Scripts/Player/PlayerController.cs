@@ -5,7 +5,6 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
 {
     [Header("Controls")]
     public InputActionAsset inputActions;
-    public PlayerUpgrade speedStats;
     float moveSpeed;
     public float jumpHeight;
     public float gravityMultiplier = 1;
@@ -13,6 +12,10 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
     [Header("Animations")]
     public Animator playerModelAnimator;
     public string walkBool, jumpTrigger;
+
+    [Header("Stats")]
+    public PlayerUpgrade speedStats;
+    public PlayerUpgrade critStats;
 
     [HideInInspector]
     public static bool isActive = false;
@@ -26,12 +29,12 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
 
     void OnEnable()
     {
-        speedStats.levelUp += OnLevelUp;
+        speedStats.levelUp += LevelUpSpeed;
     }
 
     void OnDisable()
     {
-        speedStats.levelUp -= OnLevelUp;
+        speedStats.levelUp -= LevelUpSpeed;
     }
 
     void Start()
@@ -136,12 +139,9 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
     //========================================
     //Upgrade functions
 
-    void SetSpeed(float value)
-    {
-        moveSpeed = value;
-    }
+    void SetSpeed(float value) => moveSpeed = value;
 
-    void OnLevelUp()
+    void LevelUpSpeed()
     {
         PlayerUpgrade.LevelStatGroup statGroup = speedStats.GetLevelValue();
 

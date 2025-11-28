@@ -7,11 +7,12 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
     public float damageIndicatorYOffset = 1;
     public MonoBehaviour controllerScript;
     public GameEvent onDeath; //Used to broadcast publicly
-    public PlayerUpgrade healthStat;
+    public PlayerUpgrade healthStat, armorStat;
 
-    int health;
+    float health;
+    float armor;
     IEntity entity;
-    Vector3 spawnIndicatorOffset;
+    Vector3 spawnIndicatorOffset, damageIndicatorSpawn;
 
     bool isReady;
     public bool IsReady() => isReady;
@@ -20,7 +21,11 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
     {
         if (healthStat != null)
         {
-            healthStat.levelUp += IncreaseOnLevelUp;
+            healthStat.levelUp += LevelUpHealth;
+        }
+        if (armorStat != null)
+        {
+            armorStat.levelUp += LevelUpArmor;
         }
     }
 
@@ -28,7 +33,11 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
     {
         if (healthStat != null)
         {
-            healthStat.levelUp -= IncreaseOnLevelUp;
+            healthStat.levelUp -= LevelUpHealth;
+        }
+        if (armorStat != null)
+        {
+            armorStat.levelUp -= LevelUpArmor;
         }
     }
 
@@ -36,8 +45,12 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
     {
         entity = controllerScript.GetComponent<IEntity>();
 
+        armor = 0;
+
         if (healthStat != null)
             SetMaxHealth(healthStat.GetLevelValue().stats[0].value);
+        if (armorStat != null)
+            SetArmor(armorStat.GetLevelValue().stats[0].value);
 
         health = maxHealth;
 
@@ -56,12 +69,18 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
     {
         if (health <= 0)
             return;
+        
+        float finalDamage = damage * (1 - armor);
 
-        health -= (int)damage;
+        if (gameObject.tag == "Player")
+            print($"Damaging for {damage} * (1 - {armor}) = {finalDamage}");
+
+        health -= finalDamage;
+
+        damageIndicatorSpawn = gameObject.CompareTag("Player") ? transform.position : healthBar.transform.position;
 
         // Spawn damage indicator
-        GameObject indicator = DamageIndicatorManager.Instance.SpawnIndicator(transform.position + spawnIndicatorOffset);
-        indicator.GetComponent<DamageIndicator>().SetValue(damage);
+        DamageIndicatorManager.Instance.SpawnIndicator(damageIndicatorSpawn + spawnIndicatorOffset, finalDamage);
 
         entity.ReactToDamage();
 
@@ -107,7 +126,12 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
         healthBar.SetMaxValue(value);
     }
 
-    void IncreaseOnLevelUp()
+    void SetArmor(float value)
+    {
+        armor = value;
+    }
+
+    void LevelUpHealth()
     {
         PlayerUpgrade.LevelStatGroup statGroup = healthStat.GetLevelValue();
 
@@ -119,6 +143,19 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
         }
 
         SetMaxHealth(statGroup.stats[0].value);
-        print("Max health is now " + maxHealth);
+    }
+
+    void LevelUpArmor()
+    {
+        PlayerUpgrade.LevelStatGroup statGroup = armorStat.GetLevelValue();
+
+        if (statGroup.stats.Length != 1)
+        {
+            Debug.LogError(armorStat.name + " has incorrect number of values");
+            Debug.Break();
+            return;
+        }
+
+        SetArmor(statGroup.stats[0].value);
     }
 }
