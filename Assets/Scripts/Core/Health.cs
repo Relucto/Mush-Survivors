@@ -1,4 +1,5 @@
 using UnityEngine;
+using ElementalEffects;
 
 public class Health : MonoBehaviour, IAwaitable, IDamageable
 {
@@ -7,14 +8,22 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
     public float damageIndicatorYOffset = 1;
     public MonoBehaviour controllerScript;
     public GameEvent onDeath; //Used to broadcast publicly
-    public PlayerUpgrade healthStat, armorStat;
+    public PlayerUpgrade healthStat, armorStat, frostStats;
 
+    [Header("Elemental Effects")]
+    public float burnDamage;
+    public float burnTime;
+    public float burnDamageCooldown;
+    public float slowTime;
+    
+    public EnemyController enemyController;
+    float currentBurnTime, currentBurnDamageCooldown, currentSlowTime, slowSpeedMult;
     float health;
     float armor;
     IEntity entity;
     Vector3 spawnIndicatorOffset, damageIndicatorSpawn;
 
-    bool isReady;
+    bool isReady, burning, freezing;
     public bool IsReady() => isReady;
 
     void OnEnable()
@@ -26,6 +35,10 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
         if (armorStat != null)
         {
             armorStat.levelUp += LevelUpArmor;
+        }
+        if (frostStats != null)
+        {
+            frostStats.levelUp += SetSlow;
         }
     }
 
@@ -39,11 +52,16 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
         {
             armorStat.levelUp -= LevelUpArmor;
         }
+        if (frostStats != null)
+        {
+            frostStats.levelUp -= SetSlow;
+        }
     }
 
     void Start()
     {
         entity = controllerScript.GetComponent<IEntity>();
+        enemyController = GetComponent<EnemyController>();
 
         armor = 0;
 
@@ -59,6 +77,11 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
             SetArmor(armorStat.GetLevelValue().stats[0].value);
         }
 
+        if (frostStats != null)
+        {
+            SetSlow();
+        }
+
         health = maxHealth;
 
         if (healthBar != null)
@@ -72,7 +95,33 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
         isReady = true;
     }
 
-    public void Damage(float damage, bool isCritical)
+    void Update()
+    {
+        if (currentBurnTime > 0)
+        {
+            currentBurnTime -= Time.deltaTime;
+            currentBurnDamageCooldown -= Time.deltaTime;
+
+            if (currentBurnDamageCooldown <= 0)
+            {
+                currentBurnDamageCooldown = burnDamageCooldown;
+
+                Damage(burnDamage, false, DamageType.physical, false);
+            }
+        }
+        if (currentSlowTime > 0)
+        {
+            currentSlowTime -= Time.deltaTime;
+            
+            if (currentSlowTime <= 0)
+            {
+                print("NORMAL SPEEDING!");
+                enemyController.NormalSpeed();
+            }
+        }
+    }
+    
+    public void Damage(float damage, bool isCritical, DamageType damageType, bool reactToDamage)
     {
         if (health <= 0)
             return;
@@ -90,7 +139,8 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
             DamageIndicatorManager.Instance.SpawnIndicator(damageIndicatorSpawn + spawnIndicatorOffset, finalDamage, isCritical);
         }
         
-        entity.ReactToDamage();
+        if (reactToDamage)
+            entity.ReactToDamage();
 
         if (health <= 0)
         {
@@ -109,6 +159,30 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
         //Set health bar
         if (healthBar != null)
             healthBar.SetValue(health);
+
+        switch (damageType)
+        {
+            case DamageType.fire:
+                    ApplyBurn();
+                break;
+            
+            case DamageType.ice:
+                    ApplySlow();
+                break;
+        }
+    }
+
+    void ApplyBurn()
+    {
+        currentBurnTime = burnTime;
+        currentBurnDamageCooldown = burnDamageCooldown;
+    }
+
+    void ApplySlow()
+    {
+        currentSlowTime = slowTime;
+
+        enemyController.SlowSpeed(slowSpeedMult);
     }
 
     public void Heal(int amount)
@@ -170,5 +244,12 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
         }
 
         SetArmor(statGroup.stats[0].value);
+    }
+
+    void SetSlow()
+    {
+        PlayerUpgrade.LevelStatGroup statGroup = frostStats.GetLevelValue();
+
+        slowSpeedMult = statGroup.stats[2].value;
     }
 }

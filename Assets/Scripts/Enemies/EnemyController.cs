@@ -21,12 +21,13 @@ public class EnemyController : MonoBehaviour, IEntity
 
     [HideInInspector] public Transform playerT;
     Vector3 LookAtTarget;
-    float currentCooldown, currentStunDuration, distance;
+    float currentCooldown, currentStunDuration, distance, mySpeed;
     
     bool isDead, isStunned, isMoving;
 
     void Start()
     {
+        mySpeed = agent.speed;
         isStunned = false;
     }
 
@@ -123,6 +124,19 @@ public class EnemyController : MonoBehaviour, IEntity
 
             Destroy(gameObject);
         }
+    }
+
+    public void SlowSpeed(float value)
+    {
+        agent.speed = mySpeed * value;
+        anim.speed = value;
+    }
+
+    public void NormalSpeed()
+    {
+        agent.speed = mySpeed;
+        anim.speed = 1;
+        print($"stunned = {isStunned}");
     }
 
     float Remap(float s, float a1, float a2, float b1, float b2) 

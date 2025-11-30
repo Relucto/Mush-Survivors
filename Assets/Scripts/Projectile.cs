@@ -1,4 +1,5 @@
 using UnityEngine;
+using ElementalEffects;
 
 public class Projectile : MonoBehaviour
 {
@@ -61,7 +62,7 @@ public class Projectile : MonoBehaviour
             float critDamage = allegiance == Allegiance.Friend ? WeaponHandler.CritDamage() : 0;
             bool isCritical = critDamage == 0 ? false : true;
 
-            collider.GetComponent<IDamageable>().Damage(damage + critDamage, isCritical);
+            collider.GetComponent<IDamageable>().Damage(damage + critDamage, isCritical, DamageType.physical, true);
             ReturnObject();
         }
     }

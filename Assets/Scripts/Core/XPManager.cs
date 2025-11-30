@@ -11,6 +11,7 @@ public class XPManager : MonoBehaviour, IAwaitable
     public UnityEvent<int> onPlayerLevelUp;
     public ProgressBar xpBar;
     public TMP_Text levelText, xpText;
+    public bool XForXP;
 
     float playerXP;
     float requiredXP;
@@ -43,6 +44,17 @@ public class XPManager : MonoBehaviour, IAwaitable
         isActive = true;
 
         isReady = true;
+    }
+
+    void Update()
+    {
+        if (XForXP)
+        {
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                AddXP(10);
+            }
+        }   
     }
 
     public bool IsReady() => isReady;

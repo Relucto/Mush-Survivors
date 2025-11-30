@@ -1,4 +1,5 @@
 using UnityEngine;
+using ElementalEffects;
 
 public class EnemyMeleeAttack : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class EnemyMeleeAttack : MonoBehaviour
             
             hitPlayer = true;
 
-            collider.GetComponent<Health>().Damage(attackDamage, false);
+            collider.GetComponent<Health>().Damage(attackDamage, false, DamageType.physical, true);
         }
     }
 }

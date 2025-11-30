@@ -1,3 +1,5 @@
+using ElementalEffects;
+
 public interface IFireable
 {
     void Fire();
@@ -12,7 +14,7 @@ public interface IEntity
 
 public interface IDamageable
 {
-    void Damage(float value, bool isCritical);
+    void Damage(float value, bool isCritical, DamageType damageType, bool reactToDamage);
 }
 
 public interface IAwaitable
@@ -20,7 +22,7 @@ public interface IAwaitable
     bool IsReady();
 }
 
-public interface IUpdateManageable
+namespace ElementalEffects
 {
-    void ManagedUpdate();
+    public enum DamageType {physical, fire, ice}
 }

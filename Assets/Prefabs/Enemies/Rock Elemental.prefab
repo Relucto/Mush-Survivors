@@ -181,6 +181,12 @@ MonoBehaviour:
   onDeath: {fileID: 11400000, guid: 2e3f6b1101e682b44b17612b7e03d25a, type: 2}
   healthStat: {fileID: 0}
   armorStat: {fileID: 0}
+  frostStats: {fileID: 11400000, guid: d3bcb2312e00abae4aefa462dff20803, type: 2}
+  burnDamage: 10
+  burnTime: 3
+  burnDamageCooldown: 0.25
+  slowTime: 3
+  enemyController: {fileID: 9023481333384908171}
 --- !u!114 &9023481333384908171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -790,6 +796,66 @@ PrefabInstance:
     - target: {fileID: 5649566217281874236, guid: 1f7a57f6359798341b89e95bd223cd6b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867541859241155400, guid: 1f7a57f6359798341b89e95bd223cd6b, type: 3}
+      propertyPath: lerpValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867541859241155400, guid: 1f7a57f6359798341b89e95bd223cd6b, type: 3}
+      propertyPath: gradient.ctime0
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867541859241155400, guid: 1f7a57f6359798341b89e95bd223cd6b, type: 3}
+      propertyPath: gradient.ctime1
+      value: 33346
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867541859241155400, guid: 1f7a57f6359798341b89e95bd223cd6b, type: 3}
+      propertyPath: gradient.ctime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867541859241155400, guid: 1f7a57f6359798341b89e95bd223cd6b, type: 3}
+      propertyPath: gradient.key0.b
+      value: 0.03404235
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867541859241155400, guid: 1f7a57f6359798341b89e95bd223cd6b, type: 3}
+      propertyPath: gradient.key0.g
+      value: 0.03404235
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867541859241155400, guid: 1f7a57f6359798341b89e95bd223cd6b, type: 3}
+      propertyPath: gradient.key0.r
+      value: 0.8018868
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867541859241155400, guid: 1f7a57f6359798341b89e95bd223cd6b, type: 3}
+      propertyPath: gradient.key1.b
+      value: 0.18845676
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867541859241155400, guid: 1f7a57f6359798341b89e95bd223cd6b, type: 3}
+      propertyPath: gradient.key1.g
+      value: 0.19362181
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867541859241155400, guid: 1f7a57f6359798341b89e95bd223cd6b, type: 3}
+      propertyPath: gradient.key1.r
+      value: 0.7264151
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867541859241155400, guid: 1f7a57f6359798341b89e95bd223cd6b, type: 3}
+      propertyPath: gradient.key2.b
+      value: 0.3250267
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867541859241155400, guid: 1f7a57f6359798341b89e95bd223cd6b, type: 3}
+      propertyPath: gradient.key2.g
+      value: 0.8301887
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867541859241155400, guid: 1f7a57f6359798341b89e95bd223cd6b, type: 3}
+      propertyPath: gradient.key2.r
+      value: 0.54603505
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867541859241155400, guid: 1f7a57f6359798341b89e95bd223cd6b, type: 3}
+      propertyPath: gradient.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867541859241155400, guid: 1f7a57f6359798341b89e95bd223cd6b, type: 3}
+      propertyPath: gradient.m_NumColorKeys
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8499806772802748312, guid: 1f7a57f6359798341b89e95bd223cd6b, type: 3}
       propertyPath: m_Name

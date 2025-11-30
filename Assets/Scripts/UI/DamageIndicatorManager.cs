@@ -36,7 +36,9 @@ public class DamageIndicatorManager : MonoBehaviour
     public void SpawnIndicator(Vector3 spawnPoint, float value, bool isCritical)
     {
         GameObject obj = pool.Get();
-        obj.transform.position = spawnPoint;
+
+        Vector3 randomOffset = GetRandomOffset(0.75f);
+        obj.transform.position = spawnPoint + randomOffset;
 
         Color color = isCritical ? Color.red : damageGradient.Evaluate(Mathf.InverseLerp(damageLow, damageHigh, value));
 
@@ -53,5 +55,10 @@ public class DamageIndicatorManager : MonoBehaviour
     public void ReturnIndicator(GameObject obj)
     {
         pool.Return(obj);
+    }
+
+    Vector3 GetRandomOffset(float value)
+    {
+        return new Vector3(Random.Range(-value, value), Random.Range(-value, value), Random.Range(-value, value));
     }
 }

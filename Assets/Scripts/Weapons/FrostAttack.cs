@@ -2,50 +2,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using ElementalEffects;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(Animator))]
-public class MeleeAttack : MonoBehaviour
+public class FrostAttack : MonoBehaviour
 {
-    public PlayerUpgrade weaponStats;
+    public PlayerUpgrade frostStats;
 
     Collider[] colliders;
-    float damage;
     List<Collider> alreadyDamaged = new List<Collider>();
+
+    float damage, slowMult;
+    bool isActive;
 
     void OnEnable()
     {
-        weaponStats.levelUp += SetDamage;
+        frostStats.levelUp += SetStats;
     }
 
     void OnDisable()
     {
-        weaponStats.levelUp -= SetDamage;
+        frostStats.levelUp -= SetStats;
+    }
+
+    void SetStats()
+    {
+        PlayerUpgrade.LevelStatGroup statGroup = frostStats.GetLevelValue();
+
+        damage = statGroup.stats[0].value;
     }
 
     void Start()
     {
+        frostStats.SetLevel(1);
+
+        SetStats();
+
         colliders = GetComponentsInChildren<Collider>();
+        print(colliders.Length);
 
         // Disable weapon colliers for now. They are enabled in animation
         foreach (Collider collider in colliders)
         {
             collider.enabled = false;
         }
-
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb.isKinematic == false)
-        {
-            Debug.LogWarning("Rigidbody is not kinematic for " + gameObject.name);
-            Debug.Break();
-        }
-
-        weaponStats.SetLevel(1);
-        SetDamage();
-    }
-
-    public void SetDamage()
-    {
-        damage = weaponStats.GetLevelValue().stats[0].value; // [0] is always damage
     }
 
     public void StartAttack()
@@ -76,7 +73,7 @@ public class MeleeAttack : MonoBehaviour
             float critDamage = WeaponHandler.CritDamage();
             bool isCritical = critDamage == 0 ? false : true;
 
-            collider.GetComponent<IDamageable>().Damage(damage + critDamage, isCritical, DamageType.physical, true);
+            collider.GetComponent<IDamageable>().Damage(damage + critDamage, isCritical, DamageType.ice, true);
             alreadyDamaged.Add(collider);
         }
     }

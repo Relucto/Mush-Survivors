@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e978e8f8f05810b48af70cc5069858fa, type: 3}
+  m_Name: FrostStats
+  m_EditorClassIdentifier: 
+  upgradeName: Frost Blast
+  displaySprite: {fileID: 21300000, guid: fb62f5a05a721f84ab8b317d031732ab, type: 3}
+  printDebug: 0
+  type: 1
+  levelValueGroup:
+  - stats:
+    - statName: Damage
+      value: 15
+    - statName: Cooldown
+      value: 2
+    - statName: Slow Multiplier
+      value: 0.5
+  - stats:
+    - statName: Damage
+      value: 25
+    - statName: Cooldown
+      value: 1.4
+    - statName: Slow Multiplier
+      value: 0.34
+  isActive: 1
