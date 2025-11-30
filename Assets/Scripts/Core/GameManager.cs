@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using AudioSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class GameManager : MonoBehaviour
     public GameObject deathScreen;
     public WeaponAnimator vine;
     public SporeBulletLauncher sporeLauncher;
+    public AudioChannel musicChannel;
+    public AudioPair music;
 
     [Header("Ready Objects")]
     public bool showReadyStatus;
@@ -74,6 +77,8 @@ public class GameManager : MonoBehaviour
         timerActive = false;
 
         StartCoroutine(ReadyUp());
+
+        musicChannel.Play(music.clip, music.volume);
     }
 
     IEnumerator ReadyUp()
@@ -187,18 +192,21 @@ public class GameManager : MonoBehaviour
 
         // Enable death screen
         deathScreen.SetActive(true);
-
+        
         StartCoroutine(FadeOut());
 
         IEnumerator FadeOut()
         {
             yield return new WaitForSeconds(3);
 
+            UIManager.Instance.ChangeScene("MainMenu");
+
+            /*
             fader.Play("FadeOut");
 
             yield return new WaitForSeconds(1.5f);
 
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("MainMenu");*/
         }
     }
 }

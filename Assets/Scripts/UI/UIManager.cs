@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour, IAwaitable
 
     public GameObject pauseMenu, upgradeScreen;
     public Animator faderAnim;
+    public AudioChannel musicChannel;
 
     bool isReady;
     public bool IsReady() => isReady;
@@ -61,6 +62,8 @@ public class UIManager : MonoBehaviour, IAwaitable
 
     public void ChangeScene(string nextScene)
     {
+        musicChannel.Stop();
+        
         StartCoroutine(FadeOut());
 
         IEnumerator FadeOut()

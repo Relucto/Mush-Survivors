@@ -15,4 +15,10 @@ public class DamageIndicator : MonoBehaviour
     {
         DamageIndicatorManager.Instance.ReturnIndicator(gameObject);
     }
+
+    void OnDisable()
+    {
+        GetComponent<Animator>().speed = 1;
+        transform.localScale = Vector3.one;
+    }
 }

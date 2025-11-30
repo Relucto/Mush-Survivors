@@ -51,14 +51,17 @@ public class Projectile : MonoBehaviour
 
     public void SetDamage(float value)
     {
-        damage = allegiance == Allegiance.Friend ? value + WeaponHandler.CritDamage() : value;
+        damage = value;
     }
 
     void OnTriggerEnter(Collider collider)
     {
         if (collider.CompareTag(tagToDamage))
         {
-            collider.GetComponent<IDamageable>().Damage(damage);
+            float critDamage = allegiance == Allegiance.Friend ? WeaponHandler.CritDamage() : 0;
+            bool isCritical = critDamage == 0 ? false : true;
+
+            collider.GetComponent<IDamageable>().Damage(damage + critDamage, isCritical);
             ReturnObject();
         }
     }

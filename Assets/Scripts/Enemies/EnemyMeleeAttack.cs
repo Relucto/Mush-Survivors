@@ -33,7 +33,7 @@ public class EnemyMeleeAttack : MonoBehaviour
             
             hitPlayer = true;
 
-            collider.GetComponent<Health>().Damage(attackDamage);
+            collider.GetComponent<Health>().Damage(attackDamage, false);
         }
     }
 }

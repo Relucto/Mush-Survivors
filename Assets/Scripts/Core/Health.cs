@@ -72,7 +72,7 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
         isReady = true;
     }
 
-    public void Damage(float damage)
+    public void Damage(float damage, bool isCritical)
     {
         if (health <= 0)
             return;
@@ -81,11 +81,15 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
 
         health -= finalDamage;
 
-        damageIndicatorSpawn = gameObject.CompareTag("Player") ? transform.position : healthBar.transform.position;
+        // Spawn damage indicator (on enemy)
+        if (gameObject.CompareTag("Player") == false)
+        {
+            damageIndicatorSpawn = healthBar.transform.position;
 
-        // Spawn damage indicator
-        DamageIndicatorManager.Instance.SpawnIndicator(damageIndicatorSpawn + spawnIndicatorOffset, finalDamage);
-
+            // Spawn damage indicator
+            DamageIndicatorManager.Instance.SpawnIndicator(damageIndicatorSpawn + spawnIndicatorOffset, finalDamage, isCritical);
+        }
+        
         entity.ReactToDamage();
 
         if (health <= 0)

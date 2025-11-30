@@ -12,7 +12,7 @@ public interface IEntity
 
 public interface IDamageable
 {
-    void Damage(float value);
+    void Damage(float value, bool isCritical);
 }
 
 public interface IAwaitable

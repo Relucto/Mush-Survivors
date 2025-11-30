@@ -33,13 +33,21 @@ public class DamageIndicatorManager : MonoBehaviour
         pool = new Pool(prefab, startSize, maxSize, poolParent);
     }
 
-    public void SpawnIndicator(Vector3 spawnPoint, float value)
+    public void SpawnIndicator(Vector3 spawnPoint, float value, bool isCritical)
     {
         GameObject obj = pool.Get();
         obj.transform.position = spawnPoint;
 
+        Color color = isCritical ? Color.red : damageGradient.Evaluate(Mathf.InverseLerp(damageLow, damageHigh, value));
+
         DamageIndicator indicator = obj.GetComponent<DamageIndicator>();
-        indicator.SetValue(value, damageGradient.Evaluate(Mathf.InverseLerp(damageLow, damageHigh, value)));
+        indicator.SetValue(value, color);
+
+        if (isCritical)
+        {
+            indicator.GetComponent<Animator>().speed = 0.5f;
+            indicator.transform.localScale = Vector3.one * 2;
+        }
     }
 
     public void ReturnIndicator(GameObject obj)

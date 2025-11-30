@@ -95,8 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f1ee8ed6e6eafe58b301824499522ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  lifeTime: 30
+  lifeTime: 300
   value: 10
   lerpSpeed: 5
 --- !u!1 &4345517726932982378
