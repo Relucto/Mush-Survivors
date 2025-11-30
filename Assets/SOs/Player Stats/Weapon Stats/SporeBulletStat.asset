@@ -19,16 +19,16 @@ MonoBehaviour:
   levelValueGroup:
   - stats:
     - statName: Damage
-      value: 70
+      value: 65
     - statName: Cooldown
-      value: 0.3
+      value: 0.2
     - statName: Spin Speed Multiplier
       value: 0.25
   - stats:
     - statName: Damage
-      value: 100
+      value: 110
     - statName: Cooldown
-      value: 0.2
+      value: 0.15
     - statName: Spin Speed Multiplier
       value: 0.4
   isActive: 1

@@ -19,5 +19,5 @@ MonoBehaviour:
   levelValueGroup:
   - stats:
     - statName: Range
-      value: 2.5
+      value: 5
   isActive: 1

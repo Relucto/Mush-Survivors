@@ -15,17 +15,17 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
 
     [Header("Stats")]
     public PlayerUpgrade speedStats;
-    public PlayerUpgrade critStats;
 
     [HideInInspector]
     public static bool isActive = false;
 
-    Vector3 playerVelocity;
+    Vector3 playerVelocity, wallPush;
     Transform mainCamera;
     CharacterController controller;
     const float gravityValue = -9.81f;
+    float characterRadius;
 
-    bool isReady = false, isDead;
+    bool isReady = false, isDead, grounded, onWall;
 
     void OnEnable()
     {
@@ -41,7 +41,9 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
     {
         mainCamera = Camera.main.transform;
         controller = GetComponent<CharacterController>();
+        characterRadius = controller.radius * transform.localScale.x;
 
+        speedStats.SetLevel(1);
         SetSpeed(speedStats.GetLevelValue().stats[0].value);
 
         isReady = true;
@@ -56,18 +58,22 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
     {
         if (isActive == false)
             return;
+
+        grounded = IsGrounded();
             
-        if (controller.isGrounded && playerVelocity.y < 0)
+        if (grounded && playerVelocity.y < 0)
         {
-            playerVelocity.y = 0f;
+            playerVelocity.y = -5f;
         }
+
+        
 
         //====================
         //Horizontal Movement
 
         Vector2 moveInput = InputManager.Instance.ReadMoveInput();
         Vector2 adjustedInputVector = GetDirectionVector(moveInput);
-        Vector3 move = new Vector3(adjustedInputVector.x, 0, adjustedInputVector.y);
+        Vector3 move = !onWall ? new Vector3(adjustedInputVector.x, 0, adjustedInputVector.y) : Vector3.zero;
 
         //====================
         //Set Animator state
@@ -84,7 +90,7 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
         //====================
         //Jump
 
-        if (InputManager.Instance.ReadJump() && controller.isGrounded)
+        if (InputManager.Instance.ReadJump() && grounded)
         {
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravityValue * gravityMultiplier);
             playerModelAnimator.SetTrigger(jumpTrigger);
@@ -98,7 +104,7 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
         //====================
         //Combine and apply movement
 
-        Vector3 moveVector = (move * moveSpeed) + (playerVelocity.y * Vector3.up);
+        Vector3 moveVector = (move * moveSpeed) + (wallPush * 3) + (playerVelocity.y * Vector3.up);
         
         controller.Move(moveVector * Time.deltaTime);
     }
@@ -117,6 +123,33 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
 
         //Convert angle to vector2
         return new Vector2(Mathf.Cos(finalAngle), Mathf.Sin(finalAngle)).normalized;
+    }
+
+    bool IsGrounded()
+    {
+        RaycastHit hit;
+        if (Physics.SphereCast(transform.position, characterRadius, Vector3.down, out hit, 1.2f))
+        {
+            float angle = Vector3.Angle(hit.normal, Vector3.up);
+
+            if (angle < controller.slopeLimit)
+            {
+                onWall = false;
+                wallPush = Vector3.zero;
+                return true;
+            }
+            else
+            {
+                onWall = true;
+                wallPush = new Vector3(hit.normal.x, 0, hit.normal.z).normalized;
+            }
+        }
+        else
+        {
+            onWall = false;
+        }
+
+        return false;
     }
 
     public void ReactToDamage()

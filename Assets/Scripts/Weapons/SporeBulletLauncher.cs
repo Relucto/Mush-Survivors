@@ -44,6 +44,7 @@ public class SporeBulletLauncher : MonoBehaviour
 
     void Start()
     {
+        sporeBulletStats.SetLevel(1);
         SetStats();
 
         pool = new Pool(projectilePrefab, startSize, maxSize, poolParent);

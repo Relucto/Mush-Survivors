@@ -48,9 +48,16 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
         armor = 0;
 
         if (healthStat != null)
+        {
+            healthStat.SetLevel(1);
             SetMaxHealth(healthStat.GetLevelValue().stats[0].value);
-        if (armorStat != null)
+        }
+            
+        if (armorStat != null) 
+        {
+            armorStat.SetLevel(1);
             SetArmor(armorStat.GetLevelValue().stats[0].value);
+        }
 
         health = maxHealth;
 
@@ -139,7 +146,12 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
             return;
         }
 
+        int temp = maxHealth;
+
         SetMaxHealth(statGroup.stats[0].value);
+
+        //Heal new health back up
+        Heal(maxHealth - temp);
     }
 
     void LevelUpArmor()

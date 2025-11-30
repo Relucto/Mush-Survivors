@@ -20,6 +20,9 @@ public class WeaponHandler : MonoBehaviour
 
     void Start()
     {
+        critChanceStats.SetLevel(1);
+        critDamageStats.SetLevel(1);
+        
         SetCritChance(critChanceStats.GetLevelValue().stats[0].value);
         SetCritDamage(critDamageStats.GetLevelValue().stats[0].value);
     }

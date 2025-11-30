@@ -40,7 +40,7 @@ public class UpgradeManager : MonoBehaviour, IAwaitable
         foreach (PlayerUpgrade stat in playerStats)
         {
             //print(stat.upgradeName);
-            //stat.SetLevel(1);
+            stat.SetLevel(1);
         }
 
         // Disable all weapons (MAY NOT BE NEEDED!!!!!!!!!!!!!!!!!!!!!!!!!!)

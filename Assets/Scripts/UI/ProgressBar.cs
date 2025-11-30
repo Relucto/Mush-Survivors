@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,9 @@ public class ProgressBar : MonoBehaviour
     public Gradient gradient;
     public float lerpRate = 10;
     public bool lerpValue = true;
+    
+    [Header("Optional - Player health / xp")]
+    public TMP_Text fillText;
 
     float currentValue, targetValue;
 
@@ -35,6 +39,9 @@ public class ProgressBar : MonoBehaviour
     {
         slider.value = value;
         fill.color = gradient.Evaluate(value / slider.maxValue);
+
+        if (fillText != null)
+            fillText.text = slider.value.ToString("F1") + " / " + slider.maxValue.ToString("F1");
     }
 
     void Update()

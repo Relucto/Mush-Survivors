@@ -38,6 +38,7 @@ public class MeleeAttack : MonoBehaviour
             Debug.Break();
         }
 
+        weaponStats.SetLevel(1);
         SetDamage();
     }
 

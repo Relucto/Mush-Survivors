@@ -6,7 +6,7 @@ public class UIManager : MonoBehaviour, IAwaitable
 {
     public static UIManager Instance { get; private set; }
 
-    public GameObject pauseMenu;
+    public GameObject pauseMenu, upgradeScreen;
     public Animator faderAnim;
 
     bool isReady;
@@ -35,7 +35,7 @@ public class UIManager : MonoBehaviour, IAwaitable
     void Update()
     {
         // Toggle pause when pressing pause button
-        if (InputManager.Instance.ReadPause())
+        if (InputManager.Instance.ReadPause() && upgradeScreen.activeInHierarchy == false)
         {
             EnablePauseMenu(Time.timeScale == 1 ? true : false);
         }
@@ -73,6 +73,7 @@ public class UIManager : MonoBehaviour, IAwaitable
                 yield return null;
             } while (faderAnim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1);
 
+            Time.timeScale = 1;
             SceneManager.LoadScene(nextScene);
         }
     }

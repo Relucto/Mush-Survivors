@@ -53,7 +53,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.5
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5990839293635242437
 Rigidbody:
@@ -96,4 +96,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupStats: {fileID: 11400000, guid: 55a38cacf173923179c8c4c3af9dac56, type: 2}
   pickupCollider: {fileID: 6992929495126427}
-  suckSpeed: 10
+  pulledObjects: []

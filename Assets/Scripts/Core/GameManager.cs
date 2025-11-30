@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
         public string name;
         public GameObject obj;
         public MonoBehaviour[] scripts;
+        public bool disabled;
     }
 
     float currentSeconds;
@@ -80,6 +81,9 @@ public class GameManager : MonoBehaviour
         // For each entry
         foreach (ReadyObject entry in readyObjects)
         {
+            if (entry.disabled)
+                continue;
+                
             // Enable object
             if (entry.obj != null)
                 entry.obj.SetActive(true);

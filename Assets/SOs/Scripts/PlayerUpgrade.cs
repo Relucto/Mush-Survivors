@@ -52,14 +52,14 @@ public class PlayerUpgrade : ScriptableObject
         {
             string errorMessage = "";
 
-        if (displaySprite == null)
-            errorMessage += "Missing Sprite! ";
-        if (upgradeName.Equals(""))
-            errorMessage += "Missing Name! ";
-        if (!errorMessage.Equals(""))
-            Debug.LogWarning(name + ": " + errorMessage);
+            if (displaySprite == null)
+                errorMessage += "Missing Sprite! ";
+            if (upgradeName.Equals(""))
+                errorMessage += "Missing Name! ";
+            if (!errorMessage.Equals(""))
+                Debug.LogWarning(name + ": " + errorMessage);
 
-        Debug.Log(name + ": Level " + level);
+            Debug.Log(name + ": Level " + level);
         }
     }
 

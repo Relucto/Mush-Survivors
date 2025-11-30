@@ -26,4 +26,19 @@ public class MainMenuManager : MonoBehaviour
             SceneManager.LoadScene("Game");
         }    
     }
+
+    public void QuitGame()
+    {
+        StartCoroutine(FadeOut());
+
+        IEnumerator FadeOut()
+        {
+            fader.Play("FadeOut");
+
+            yield return new WaitForSeconds(1.5f);
+
+            Application.Quit();
+            print("Quit game");
+        }
+    }
 }
