@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -10,15 +9,11 @@ public class EnemySpawner : MonoBehaviour, IAwaitable
     public int maxEnemies = 50;
     public float waitTime = 0.5f;
     public float plantRespawnCooldown;
+    public SpawnSetting[] spawnSettings;
     [HideInInspector] public static int numEnemies = 0;
-    public EnemyType[] enemies;
     //public GameObject enemyPrefab;
     public Transform spawnLocation, player;
     public GameObject plantSpawnsParent;
-
-    List<Vector3> plantSpawns = new List<Vector3>();
-    List<Vector3> takenSpawns = new List<Vector3>();
-    List<RemoveEntry> removeEntries = new List<RemoveEntry>();
 
     public class RemoveEntry
     {
@@ -26,8 +21,14 @@ public class EnemySpawner : MonoBehaviour, IAwaitable
         public float timer;
     }
 
+    List<EnemyType> enemies = new List<EnemyType>();
+    List<Vector3> plantSpawns = new List<Vector3>();
+    List<Vector3> takenSpawns = new List<Vector3>();
+    List<RemoveEntry> removeEntries = new List<RemoveEntry>();
     NavMeshTriangulation triangulation;
 
+    SpawnSetting activeSpawnSetting;
+    float currentWaitTime, runTime;
     int totalChance;
     bool spawning, isReady;
 
@@ -36,6 +37,7 @@ public class EnemySpawner : MonoBehaviour, IAwaitable
     {
         public GameObject prefab;
         public int spawnChance;
+        public float health;
     }
 
     void Awake()
@@ -55,21 +57,14 @@ public class EnemySpawner : MonoBehaviour, IAwaitable
     {
         numEnemies = 0;
         totalChance = 0;
+        currentWaitTime = waitTime;
+        activeSpawnSetting = spawnSettings[0];
+
+        SetSpawns();
 
         BuildPlantSpawns();
-        
-        foreach (EnemyType enemy in enemies)
-        {
-            totalChance += enemy.spawnChance;
-        }
 
         triangulation = NavMesh.CalculateTriangulation();
-
-        /*
-        foreach (EnemyType enemy in enemies)
-        {
-            GameObject obj = Instantiate(enemy.prefab, new Vector3(-1000, 0, 0), Quaternion.identity);
-        } */
 
         isReady = true;
     }
@@ -78,9 +73,18 @@ public class EnemySpawner : MonoBehaviour, IAwaitable
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        // Spawn enemies
+        if (spawning)
         {
-            SpawnEnemy();
+            runTime += Time.deltaTime;
+            currentWaitTime -= Time.deltaTime;
+
+            if (currentWaitTime <= 0)
+            {
+                currentWaitTime = waitTime;
+
+                SpawnEnemy();
+            }
         }
 
         // Don't let plant spawn in same spot after one just died
@@ -93,6 +97,44 @@ public class EnemySpawner : MonoBehaviour, IAwaitable
                 removeEntries.RemoveAt(i);
             }
         }
+
+        // Check round time for spawn settings
+        foreach (SpawnSetting setting in spawnSettings)
+        {
+            // If start time is here
+            if (setting.startTime < runTime)
+            {
+                // If this one's start time is greater than the active one
+                if (setting.startTime > activeSpawnSetting.startTime)
+                {
+                    print(setting.startTime + " > " + activeSpawnSetting.startTime);
+                    print($"Activating {setting.name}");
+                    activeSpawnSetting = setting;
+                    SetSpawns();
+                }
+            }
+        }
+    }
+
+    void SetSpawns()
+    {
+        waitTime = activeSpawnSetting.waitTime;
+        maxEnemies = activeSpawnSetting.maxEnemies;
+
+        enemies.Clear();
+
+        totalChance = 0;
+        
+        foreach (EnemyType enemy in activeSpawnSetting.enemies)
+        {
+            enemies.Add(enemy);
+
+            totalChance += enemy.spawnChance;
+        }
+        
+        print("Wait time = " + waitTime);
+        print("Max enemies = " + maxEnemies);
+        print("Total chance = " + totalChance);
     }
 
     void SpawnEnemy()
@@ -101,16 +143,16 @@ public class EnemySpawner : MonoBehaviour, IAwaitable
             return;
 
         // Replace with pool?
-        GameObject prefab = GetRandomEnemy();
+        EnemyType enemyType = GetRandomEnemy();
 
-        if (prefab == null)
+        if (enemyType.prefab == null)
             return;
 
-        Vector3 spawnPosition = GetRandomPosition(prefab.tag);
+        Vector3 spawnPosition = GetRandomPosition(enemyType.prefab.tag);
         if (spawnPosition == Vector3.zero) // If it chose plant, and there are no more spawns
             return;
 
-        GameObject enemyObj = Instantiate(prefab, spawnLocation.position, Quaternion.identity);
+        GameObject enemyObj = Instantiate(enemyType.prefab, spawnLocation.position, Quaternion.identity);
 
         // Error check
         if (spawnPosition == Vector3.zero)
@@ -121,6 +163,8 @@ public class EnemySpawner : MonoBehaviour, IAwaitable
             Destroy(enemyObj);
             return;
         }
+
+        enemyObj.GetComponent<Health>().SetMaxHealth(enemyType.health);
 
         if (enemyObj.CompareTag("Plant"))
         {
@@ -169,7 +213,7 @@ public class EnemySpawner : MonoBehaviour, IAwaitable
         }
     }
 
-    GameObject GetRandomEnemy()
+    EnemyType GetRandomEnemy()
     {
         int randomValue = Random.Range(0, totalChance);
 
@@ -177,7 +221,7 @@ public class EnemySpawner : MonoBehaviour, IAwaitable
         {
             if (randomValue < enemy.spawnChance)
             {
-                return enemy.prefab;
+                return enemy;
             }
 
             randomValue -= enemy.spawnChance;
@@ -186,7 +230,7 @@ public class EnemySpawner : MonoBehaviour, IAwaitable
         Debug.LogError("SOMETHING WENT WRONG WITH THE RANDOM SPAWN CHANCE THING HELP");
         Debug.LogError("randomValue chosen was " + randomValue + "??");
         Debug.Break();
-        return null;
+        return new EnemyType();
     }
 
     List<float> distances = new List<float>();
@@ -263,23 +307,11 @@ public class EnemySpawner : MonoBehaviour, IAwaitable
     public void StartSpawning()
     {
         spawning = true;
-
-        StartCoroutine(Spawning());
     }
 
     public void StopSpawning()
     {
         spawning = false;
-    }
-    
-    IEnumerator Spawning()
-    {
-        while (spawning)
-        {
-            SpawnEnemy();
-            
-            yield return new WaitForSeconds(waitTime);
-        }
     }
 
     public void PlantKilled(Vector3 pos)

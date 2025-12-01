@@ -16,6 +16,8 @@ public class EnemyController : MonoBehaviour, IEntity
     public Animator anim;
     public Material material;
     public GameObject xpPrefab;
+    public GameObject healthPickupPrefab;
+    [Tooltip("integer percent")] public int healthSpawnChance;
     public NavMeshAgent agent;
     public Rigidbody rb;
 
@@ -119,8 +121,20 @@ public class EnemyController : MonoBehaviour, IEntity
 
             EnemySpawner.numEnemies--;
 
-            // Spawn xp
-            Instantiate(xpPrefab, transform.position, transform.rotation).GetComponent<XPOrb>().SetXPValue(xpValue);
+            if (Random.Range(0, 100) < healthSpawnChance)
+            {
+                XPOrb healthPickup = Instantiate(xpPrefab, transform.position + transform.forward, transform.rotation).GetComponent<XPOrb>();
+                healthPickup.myType = XPOrb.PickupType.health;
+                // Enable model - Disable xp sprite
+                healthPickup.ConvertToHealth();
+            }
+            else
+            {
+                // Spawn xp
+                XPOrb orb = Instantiate(xpPrefab, transform.position, transform.rotation).GetComponent<XPOrb>();
+                orb.myType = XPOrb.PickupType.xp;
+                orb.SetXPValue(xpValue);
+            }
 
             Destroy(gameObject);
         }

@@ -4701,6 +4701,63 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1055652509}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1115839107
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6760435935042558488, guid: 262baf7148aa20f4090a9514e2ad47d3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -12.251059
+      objectReference: {fileID: 0}
+    - target: {fileID: 6760435935042558488, guid: 262baf7148aa20f4090a9514e2ad47d3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 13.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 6760435935042558488, guid: 262baf7148aa20f4090a9514e2ad47d3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -17.583542
+      objectReference: {fileID: 0}
+    - target: {fileID: 6760435935042558488, guid: 262baf7148aa20f4090a9514e2ad47d3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6760435935042558488, guid: 262baf7148aa20f4090a9514e2ad47d3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6760435935042558488, guid: 262baf7148aa20f4090a9514e2ad47d3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6760435935042558488, guid: 262baf7148aa20f4090a9514e2ad47d3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6760435935042558488, guid: 262baf7148aa20f4090a9514e2ad47d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6760435935042558488, guid: 262baf7148aa20f4090a9514e2ad47d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6760435935042558488, guid: 262baf7148aa20f4090a9514e2ad47d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772034239738908373, guid: 262baf7148aa20f4090a9514e2ad47d3, type: 3}
+      propertyPath: m_Name
+      value: Parent_FireFly_Lights
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 262baf7148aa20f4090a9514e2ad47d3, type: 3}
 --- !u!1 &1140344203
 GameObject:
   m_ObjectHideFlags: 0
@@ -6225,9 +6282,9 @@ MonoBehaviour:
   startWithoutWeapons: 0
   weaponUpgrades:
   - {fileID: 11400000, guid: acebdca4b74df6241a9f527679d4fb45, type: 2}
+  - {fileID: 11400000, guid: 68c4955a3fedb6238833f5f62bbc3fde, type: 2}
   - {fileID: 11400000, guid: 6e7f1b45d14c7a1e381277de09d85dcf, type: 2}
   - {fileID: 11400000, guid: d3bcb2312e00abae4aefa462dff20803, type: 2}
-  - {fileID: 11400000, guid: 68c4955a3fedb6238833f5f62bbc3fde, type: 2}
   upgradeScreen: {fileID: 754795523}
   choiceOptions:
   - {fileID: 488662793546335794}
@@ -6649,17 +6706,9 @@ MonoBehaviour:
   maxEnemies: 60
   waitTime: 1.2
   plantRespawnCooldown: 24
-  enemies:
-  - prefab: {fileID: 7990338629259969995, guid: d0e34a6e301150b4686507ba755ead4b, type: 3}
-    spawnChance: 50
-  - prefab: {fileID: 2168190183651100309, guid: 2f5bf7f3176f299418b2465f4c06d706, type: 3}
-    spawnChance: 50
-  - prefab: {fileID: 7433777963099964046, guid: cda9d87b575fc3b40b771fae35b2a170, type: 3}
-    spawnChance: 50
-  - prefab: {fileID: 4022195550401355764, guid: 75c5994256f757768af71fe94707eda1, type: 3}
-    spawnChance: 50
-  - prefab: {fileID: 1311911913535958100, guid: f1cb4a7d8d499990d9ce31aba07fba73, type: 3}
-    spawnChance: 10
+  spawnSettings:
+  - {fileID: 11400000, guid: cdfce5c10e942e4488e449aae211dcfa, type: 2}
+  - {fileID: 11400000, guid: 35814b10803fff842995e1e3635263f8, type: 2}
   spawnLocation: {fileID: 254893528}
   player: {fileID: 1658164295316194463}
   plantSpawnsParent: {fileID: 1879253374}
@@ -8779,3 +8828,4 @@ SceneRoots:
   - {fileID: 90931500}
   - {fileID: 389306898}
   - {fileID: 8053672162455875551}
+  - {fileID: 1115839107}

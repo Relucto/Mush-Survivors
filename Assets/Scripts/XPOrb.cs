@@ -1,10 +1,18 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class XPOrb : MonoBehaviour
 {
     public float lifeTime;
     public float value;
     public float lerpSpeed;
+    public GameObject potionParent, xpParent;
+    public Image xpImage;
+    public Sprite[] xpSprites;
+
+    [HideInInspector] public PickupType myType;
+
+    public enum PickupType {xp, health}
 
     Transform playerT;
 
@@ -14,6 +22,8 @@ public class XPOrb : MonoBehaviour
     {
         playerT = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         moving = false;
+
+        xpImage.overrideSprite = xpSprites[Random.Range(0, xpSprites.Length)];
     }
 
     public void EnableMove()
@@ -40,13 +50,29 @@ public class XPOrb : MonoBehaviour
 
     public void Consume()
     {
-        XPManager.Instance.AddXP(value);
+        if (myType == PickupType.xp)
+        {
+            XPManager.Instance.AddXP(value);
+        }
+        else if (myType == PickupType.health)
+        {
+            // Heal player
+            Health playerHealth = playerT.GetComponent<Health>();
+            playerHealth.Heal(playerHealth.maxHealth / 6);
+        }
+        
         Destroy(gameObject);
+    }
+
+    public void ConvertToHealth()
+    {
+        xpParent.SetActive(false);
+        potionParent.SetActive(true);
     }
 
     public void SetXPValue(float num)
     {
         float randomness = num * 0.2f;
-        value = Random.Range(num - randomness, num + randomness);
+        value = UnityEngine.Random.Range(num - randomness, num + randomness);
     }
 }

@@ -182,11 +182,16 @@ MonoBehaviour:
   healthStat: {fileID: 0}
   armorStat: {fileID: 0}
   frostStats: {fileID: 11400000, guid: d3bcb2312e00abae4aefa462dff20803, type: 2}
+  hasRegen: 0
+  regenRate: 0
+  renderers: []
+  normalMat: {fileID: 0}
+  redMat: {fileID: 0}
+  redTime: 0
   burnDamage: 10
   burnTime: 5
   burnDamageCooldown: 0.25
   slowTime: 3
-  enemyController: {fileID: 9023481333384908171}
 --- !u!114 &9023481333384908171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,6 +212,8 @@ MonoBehaviour:
   anim: {fileID: 4374972544105601682}
   material: {fileID: 2100000, guid: 773fa9441869514b19dadd73ee5b9e87, type: 2}
   xpPrefab: {fileID: 2097778922218070316, guid: 35e940664729ee06c819a8883c52065a, type: 3}
+  healthPickupPrefab: {fileID: 0}
+  healthSpawnChance: 50
   agent: {fileID: 6939740350258203083}
   rb: {fileID: 5261130592580183615}
   playerT: {fileID: 0}

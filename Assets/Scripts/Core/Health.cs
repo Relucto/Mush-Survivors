@@ -240,7 +240,7 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
             healthBar.SetValue(health);
     }
 
-    void SetMaxHealth(float value)
+    public void SetMaxHealth(float value)
     {
         maxHealth = (int)value;
         healthBar.SetMaxValue(value);
