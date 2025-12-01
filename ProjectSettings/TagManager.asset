@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - XP
+  - Plant
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - UI
   - Hitbox
   - Cloth
-  - 
+  - Plant Ball
   - 
   - 
   - 

@@ -83,6 +83,17 @@ MonoBehaviour:
   onDeath: {fileID: 11400000, guid: dbd193432d249e547b7e35dfc499937c, type: 2}
   healthStat: {fileID: 11400000, guid: 9340169b298347245be4e067100a6d44, type: 2}
   armorStat: {fileID: 11400000, guid: 205c6102e2f45df7e8b2af31bd38baa6, type: 2}
+  frostStats: {fileID: 0}
+  hasRegen: 1
+  regenRate: 2
+  renderers: []
+  normalMat: {fileID: 0}
+  redMat: {fileID: 0}
+  redTime: 0
+  burnDamage: 0
+  burnTime: 0
+  burnDamageCooldown: 0
+  slowTime: 0
 --- !u!114 &4455278977758516431
 MonoBehaviour:
   m_ObjectHideFlags: 0

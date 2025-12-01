@@ -10,7 +10,7 @@ public class XPManager : MonoBehaviour, IAwaitable
     public float subsequentLevelMult = 1;
     public UnityEvent<int> onPlayerLevelUp;
     public ProgressBar xpBar;
-    public TMP_Text levelText, xpText;
+    public TMP_Text levelText; //xpText;
     public bool XForXP;
 
     float playerXP;
@@ -39,7 +39,7 @@ public class XPManager : MonoBehaviour, IAwaitable
         xpBar.SetValue(-1);
 
         UpdateLevelText();
-        UpdateXPText();
+        //UpdateXPText();
 
         isActive = true;
 
@@ -105,7 +105,7 @@ public class XPManager : MonoBehaviour, IAwaitable
 
     void UpdateXPText()
     {
-        xpText.text = playerXP.ToString("F2") + " / " + requiredXP.ToString("F2");
+        //xpText.text = playerXP.ToString("F2") + " / " + requiredXP.ToString("F2");
     }
 
     public void Stop() => isActive = false;

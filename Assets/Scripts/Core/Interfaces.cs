@@ -10,6 +10,8 @@ public interface IEntity
 {
     void Die();
     void ReactToDamage();
+    void SlowSpeed(float value);
+    void NormalSpeed();
 }
 
 public interface IDamageable

@@ -183,7 +183,7 @@ MonoBehaviour:
   armorStat: {fileID: 0}
   frostStats: {fileID: 11400000, guid: d3bcb2312e00abae4aefa462dff20803, type: 2}
   burnDamage: 10
-  burnTime: 3
+  burnTime: 5
   burnDamageCooldown: 0.25
   slowTime: 3
   enemyController: {fileID: 9023481333384908171}

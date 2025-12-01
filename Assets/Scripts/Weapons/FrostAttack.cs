@@ -36,7 +36,6 @@ public class FrostAttack : MonoBehaviour
         SetStats();
 
         colliders = GetComponentsInChildren<Collider>();
-        print(colliders.Length);
 
         // Disable weapon colliers for now. They are enabled in animation
         foreach (Collider collider in colliders)
@@ -65,7 +64,7 @@ public class FrostAttack : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.CompareTag("Enemy"))
+        if (collider.CompareTag("Enemy") || collider.CompareTag("Plant"))
         {
             if (alreadyDamaged.Contains(collider))
                 return;
@@ -73,7 +72,7 @@ public class FrostAttack : MonoBehaviour
             float critDamage = WeaponHandler.CritDamage();
             bool isCritical = critDamage == 0 ? false : true;
 
-            collider.GetComponent<IDamageable>().Damage(damage + critDamage, isCritical, DamageType.ice, true);
+            collider.GetComponent<IDamageable>().Damage(damage + critDamage, isCritical, DamageType.ice, false);
             alreadyDamaged.Add(collider);
         }
     }

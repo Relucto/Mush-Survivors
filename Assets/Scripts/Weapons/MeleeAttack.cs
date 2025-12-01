@@ -7,6 +7,7 @@ using ElementalEffects;
 public class MeleeAttack : MonoBehaviour
 {
     public PlayerUpgrade weaponStats;
+    public TrailRenderer trailRenderer;
 
     Collider[] colliders;
     float damage;
@@ -25,6 +26,7 @@ public class MeleeAttack : MonoBehaviour
     void Start()
     {
         colliders = GetComponentsInChildren<Collider>();
+        trailRenderer.emitting = false;
 
         // Disable weapon colliers for now. They are enabled in animation
         foreach (Collider collider in colliders)
@@ -54,6 +56,7 @@ public class MeleeAttack : MonoBehaviour
         {
             collider.enabled = true;
         }
+        trailRenderer.emitting = true;
     }
 
     public void EndAttack()
@@ -62,13 +65,14 @@ public class MeleeAttack : MonoBehaviour
         {
             collider.enabled = false;
         }
+        trailRenderer.emitting = false;
         
         alreadyDamaged.Clear();
     }
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.CompareTag("Enemy"))
+        if (collider.gameObject.CompareTag("Enemy") || collider.gameObject.CompareTag("Plant"))
         {
             if (alreadyDamaged.Contains(collider))
                 return;

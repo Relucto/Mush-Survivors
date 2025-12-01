@@ -81,7 +81,7 @@ public class FireballSpinner : MonoBehaviour
         if (!isActive)
             return;
 
-        if (collider.gameObject.CompareTag("Enemy"))
+        if (collider.CompareTag("Enemy") || collider.CompareTag("Plant"))
         {
             foreach (HitObject obj in hitObjects)
             {
@@ -108,7 +108,6 @@ public class FireballSpinner : MonoBehaviour
         PlayerUpgrade.LevelStatGroup statGroup = fireballStats.GetLevelValue();
 
         damage = statGroup.stats[0].value; // Damage
-        print($"Damage = {damage}");
         speed = statGroup.stats[1].value; // Speed
         fireballActiveIndex = (int)statGroup.stats[2].value; // Index in fireball list
 

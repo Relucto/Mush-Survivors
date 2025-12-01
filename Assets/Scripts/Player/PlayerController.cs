@@ -187,4 +187,14 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
 
         SetSpeed(statGroup.stats[0].value);
     }
+
+    public void SlowSpeed(float value)
+    {
+        
+    }
+
+    public void NormalSpeed()
+    {
+        
+    }
 }

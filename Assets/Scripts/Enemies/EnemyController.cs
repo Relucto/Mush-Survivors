@@ -136,7 +136,6 @@ public class EnemyController : MonoBehaviour, IEntity
     {
         agent.speed = mySpeed;
         anim.speed = 1;
-        print($"stunned = {isStunned}");
     }
 
     float Remap(float s, float a1, float a2, float b1, float b2) 

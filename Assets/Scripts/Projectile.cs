@@ -10,7 +10,7 @@ public class Projectile : MonoBehaviour
     [HideInInspector] public Allegiance allegiance;
     [HideInInspector] public Vector3 direction;
     float damage;
-    string tagToDamage;
+    string tagToDamage, tagToDamage2;
     float currentLifetime;
 
     public enum Allegiance { Friend, Foe }
@@ -27,9 +27,11 @@ public class Projectile : MonoBehaviour
         {
             case Allegiance.Friend:
                 tagToDamage = "Enemy";
+                tagToDamage2 = "Plant";
                 break;
             case Allegiance.Foe:
                 tagToDamage = "Player";
+                tagToDamage2 = "";
                 break;
             default:
                 Debug.LogError($"Projectile ({gameObject.name}) doesn't have a valid allegiance");
@@ -57,12 +59,12 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.CompareTag(tagToDamage))
+        if (collider.CompareTag(tagToDamage) || collider.CompareTag(tagToDamage2))
         {
             float critDamage = allegiance == Allegiance.Friend ? WeaponHandler.CritDamage() : 0;
             bool isCritical = critDamage == 0 ? false : true;
 
-            collider.GetComponent<IDamageable>().Damage(damage + critDamage, isCritical, DamageType.physical, true);
+            collider.GetComponent<IDamageable>().Damage(damage + critDamage, isCritical, DamageType.physical, false);
             ReturnObject();
         }
     }

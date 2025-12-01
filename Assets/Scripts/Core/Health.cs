@@ -9,14 +9,22 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
     public MonoBehaviour controllerScript;
     public GameEvent onDeath; //Used to broadcast publicly
     public PlayerUpgrade healthStat, armorStat, frostStats;
+    public bool hasRegen;
+    public int regenRate;
+
+    [Header("Player Materials")]
+    public SkinnedMeshRenderer[] renderers;
+    public Material normalMat;
+    public Material redMat;
+    public float redTime;
 
     [Header("Elemental Effects")]
     public float burnDamage;
     public float burnTime;
     public float burnDamageCooldown;
     public float slowTime;
-    
-    public EnemyController enemyController;
+
+    float currentRedTime, regenCooldown;
     float currentBurnTime, currentBurnDamageCooldown, currentSlowTime, slowSpeedMult;
     float health;
     float armor;
@@ -61,7 +69,6 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
     void Start()
     {
         entity = controllerScript.GetComponent<IEntity>();
-        enemyController = GetComponent<EnemyController>();
 
         armor = 0;
 
@@ -106,7 +113,7 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
             {
                 currentBurnDamageCooldown = burnDamageCooldown;
 
-                Damage(burnDamage, false, DamageType.physical, false);
+                Damage(maxHealth * 0.03f, false, DamageType.physical, false);
             }
         }
         if (currentSlowTime > 0)
@@ -115,8 +122,30 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
             
             if (currentSlowTime <= 0)
             {
-                print("NORMAL SPEEDING!");
-                enemyController.NormalSpeed();
+                entity.NormalSpeed();
+            }
+        }
+        if (currentRedTime > 0)
+        {
+            currentRedTime -= Time.deltaTime;
+
+            if (currentRedTime <= 0)
+            {
+                foreach (SkinnedMeshRenderer renderer in renderers)
+                {
+                    renderer.material = normalMat;
+                }
+            }
+        }
+
+        if (hasRegen) // Player
+        {
+            regenCooldown -= Time.deltaTime;
+
+            if (regenCooldown <= 0)
+            {
+                regenCooldown = 1;
+                Heal(regenRate);
             }
         }
     }
@@ -137,6 +166,15 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
 
             // Spawn damage indicator
             DamageIndicatorManager.Instance.SpawnIndicator(damageIndicatorSpawn + spawnIndicatorOffset, finalDamage, isCritical);
+        }
+        else // If this is the player, make them red
+        {
+            foreach (SkinnedMeshRenderer renderer in renderers)
+            {
+                renderer.material = redMat;
+            }
+
+            currentRedTime = redTime; // Start countdown to return to normal
         }
         
         if (reactToDamage)
@@ -182,7 +220,7 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
     {
         currentSlowTime = slowTime;
 
-        enemyController.SlowSpeed(slowSpeedMult);
+        entity.SlowSpeed(slowSpeedMult);
     }
 
     public void Heal(int amount)
