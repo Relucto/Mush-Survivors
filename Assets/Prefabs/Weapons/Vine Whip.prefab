@@ -442,6 +442,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponStats: {fileID: 11400000, guid: acebdca4b74df6241a9f527679d4fb45, type: 2}
   trailRenderer: {fileID: 5300517052471989480}
+  swingSound:
+    clip: {fileID: 8300000, guid: ea9e1ae65ac6d157cbb58195d09629f9, type: 3}
+    volume: 0.5
+    pitchVariance: 0.2
+  sfx: {fileID: 11400000, guid: 7d867d69bedce545e8e9ead0b75ddd3e, type: 2}
 --- !u!54 &5261129923127922196
 Rigidbody:
   m_ObjectHideFlags: 0

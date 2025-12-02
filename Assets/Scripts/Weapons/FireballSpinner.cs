@@ -74,6 +74,7 @@ public class FireballSpinner : MonoBehaviour
         isActive = true;
 
         EnableFireballs(0); // Start index (level 1)
+        GetComponent<AudioSource>().Play();
     }
 
     void OnTriggerEnter(Collider collider)

@@ -31,9 +31,9 @@ public class AudioChannel : ScriptableObject
         Play(clipName, volume, defaultPitch, defaultTransform, position);
     }
 
-    public void Play(AudioClip clipName, float volume, float pitchVariance, Transform defaultTransform)
+    public void Play(AudioClip clipName, float volume, float pitchVariance, Transform spawnTransform)
     {
-        Play(clipName, volume, pitchVariance, defaultTransform, defaultPosition);
+        Play(clipName, volume, pitchVariance, spawnTransform, defaultPosition);
     }
 
     public void Play(AudioClip clipName, float volume, float pitchVariance, Vector3? position)

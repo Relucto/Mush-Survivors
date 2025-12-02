@@ -1,5 +1,6 @@
 using UnityEngine;
 using ElementalEffects;
+using AudioSystem;
 
 public class Health : MonoBehaviour, IAwaitable, IDamageable
 {
@@ -11,6 +12,10 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
     public PlayerUpgrade healthStat, armorStat, frostStats;
     public bool hasRegen;
     public int regenRate;
+
+    [Header("Audio - optional")]
+    public AudioChannel sfx;
+    public AudioPair deathSound;
 
     [Header("Player Materials")]
     public SkinnedMeshRenderer[] renderers;
@@ -183,6 +188,11 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
         if (health <= 0)
         {
             health = 0;
+
+            if (deathSound.clip != null)
+            {
+                sfx.Play(deathSound.clip, deathSound.volume, deathSound.pitchVariance, Camera.main.transform);
+            }
 
             //Raise death events
             if (onDeath != null)

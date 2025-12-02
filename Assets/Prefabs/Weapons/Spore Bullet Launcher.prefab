@@ -48,6 +48,15 @@ MonoBehaviour:
   sporeBulletStats: {fileID: 11400000, guid: 68c4955a3fedb6238833f5f62bbc3fde, type: 2}
   projectilePrefab: {fileID: 2266026125358993220, guid: 76c1f0c5ace313c6c86299414c0f8e36, type: 3}
   spawnPoint: {fileID: 9171131506422467787}
+  spinAnim: {fileID: 0}
+  sfx: {fileID: 11400000, guid: 7d867d69bedce545e8e9ead0b75ddd3e, type: 2}
+  shoot:
+    clip: {fileID: 8300000, guid: 18e3ead91de9ba95883d19fc90a1eb3f, type: 3}
+    volume: 1
+    pitchVariance: 0.25
+  poolParent: {fileID: 0}
+  startSize: 0
+  maxSize: 0
 --- !u!1 &8150812661899872597
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,10 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ElementalEffects;
+using AudioSystem;
 
 public class FrostAttack : MonoBehaviour
 {
     public PlayerUpgrade frostStats;
+    public ParticleSystem[] particles;
+    public AudioPair frostSound;
+    public AudioChannel sfx;
 
     Collider[] colliders;
     List<Collider> alreadyDamaged = new List<Collider>();
@@ -50,6 +54,13 @@ public class FrostAttack : MonoBehaviour
         {
             collider.enabled = true;
         }
+
+        foreach (ParticleSystem particle in particles)
+        {
+            particle.Play();
+        }
+
+        sfx.Play(frostSound.clip, frostSound.volume, frostSound.pitchVariance, transform);
     }
 
     public void EndAttack()

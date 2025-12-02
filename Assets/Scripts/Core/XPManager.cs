@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using AudioSystem;
 
 public class XPManager : MonoBehaviour, IAwaitable
 {
@@ -81,6 +82,8 @@ public class XPManager : MonoBehaviour, IAwaitable
 
             // Call level up event
             onPlayerLevelUp?.Invoke(playerLevel);
+
+            GetComponent<AudioSource>().Play();
         }
 
         UpdateXPText();

@@ -1,3 +1,4 @@
+using AudioSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
     Transform mainCamera;
     CharacterController controller;
     const float gravityValue = -9.81f;
-    float characterRadius;
+    float characterRadius, currentStepCooldown;
 
     bool isReady = false, isDead, grounded, onWall;
 
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
         mainCamera = Camera.main.transform;
         controller = GetComponent<CharacterController>();
         characterRadius = controller.radius * transform.localScale.x;
+        currentStepCooldown = 0;
 
         speedStats.SetLevel(1);
         SetSpeed(speedStats.GetLevelValue().stats[0].value);
@@ -65,8 +67,6 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
         {
             playerVelocity.y = -5f;
         }
-
-        
 
         //====================
         //Horizontal Movement
@@ -157,7 +157,7 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
         if (isDead)
             return;
 
-        //React however needed
+        GetComponent<AudioSource>().Play();
     }
 
     public void Die()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using AudioSystem;
 
 public class SporeBulletLauncher : MonoBehaviour
 {
@@ -6,6 +7,8 @@ public class SporeBulletLauncher : MonoBehaviour
     public GameObject projectilePrefab;
     public Transform spawnPoint; // Rotates with animation
     public Animator spinAnim;
+    public AudioChannel sfx;
+    public AudioPair shoot;
 
 
     [Header("Pool settings")]
@@ -70,6 +73,8 @@ public class SporeBulletLauncher : MonoBehaviour
 
     void FireBullet()
     {
+        sfx.Play(shoot.clip, shoot.volume, shoot.pitchVariance, transform.position);
+        
         // Grab from pool
         GameObject bullet = pool.Get();
 

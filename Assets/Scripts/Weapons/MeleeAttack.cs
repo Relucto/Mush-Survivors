@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ElementalEffects;
+using AudioSystem;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Animator))]
@@ -8,6 +9,8 @@ public class MeleeAttack : MonoBehaviour
 {
     public PlayerUpgrade weaponStats;
     public TrailRenderer trailRenderer;
+    public AudioPair swingSound;
+    public AudioChannel sfx;
 
     Collider[] colliders;
     float damage;
@@ -57,6 +60,8 @@ public class MeleeAttack : MonoBehaviour
             collider.enabled = true;
         }
         trailRenderer.emitting = true;
+
+        sfx.Play(swingSound.clip, swingSound.volume, swingSound.pitchVariance, transform.position);
     }
 
     public void EndAttack()
