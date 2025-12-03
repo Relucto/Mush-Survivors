@@ -5,6 +5,7 @@ public class InteractZone : MonoBehaviour
     public GameObject activateObj;
     public GameObject eToInteractText;
     public GameObject frontLight;
+    public GameObject magnifyingGlass;
 
     bool active;
 
@@ -16,6 +17,7 @@ public class InteractZone : MonoBehaviour
             active = true;
             eToInteractText.SetActive(true);
             frontLight.SetActive(false);
+            magnifyingGlass.SetActive(false);
         }
     }
 
@@ -27,6 +29,7 @@ public class InteractZone : MonoBehaviour
             active = false;
             eToInteractText.SetActive(false);
             frontLight.SetActive(true);
+            magnifyingGlass.SetActive(true);
         }
     }
 
@@ -43,6 +46,7 @@ public class InteractZone : MonoBehaviour
                     // disable camera movement
                     eToInteractText.SetActive(false);
                     frontLight.SetActive(false);
+                    magnifyingGlass.SetActive(false);
                 }
             }
         }

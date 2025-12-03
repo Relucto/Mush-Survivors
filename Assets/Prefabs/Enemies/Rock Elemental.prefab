@@ -220,7 +220,7 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: 773fa9441869514b19dadd73ee5b9e87, type: 2}
   xpPrefab: {fileID: 2097778922218070316, guid: 35e940664729ee06c819a8883c52065a, type: 3}
   healthPickupPrefab: {fileID: 0}
-  healthSpawnChance: 3
+  healthSpawnChance: 12
   agent: {fileID: 6939740350258203083}
   rb: {fileID: 5261130592580183615}
   playerT: {fileID: 0}
