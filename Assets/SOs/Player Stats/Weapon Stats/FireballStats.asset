@@ -19,21 +19,21 @@ MonoBehaviour:
   levelValueGroup:
   - stats:
     - statName: Damage
-      value: 40
+      value: 20
     - statName: Speed
       value: 1
     - statName: Fireballs Index
       value: 0
   - stats:
     - statName: Damage
-      value: 60
+      value: 40
     - statName: Speed
       value: 1.25
     - statName: Fireballs Index
       value: 1
   - stats:
     - statName: Damage
-      value: 80
+      value: 40
     - statName: Speed
       value: 1.5
     - statName: Fireballs Index

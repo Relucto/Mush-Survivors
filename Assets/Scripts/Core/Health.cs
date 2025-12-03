@@ -16,6 +16,7 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
     [Header("Audio - optional")]
     public AudioChannel sfx;
     public AudioPair deathSound;
+    public AudioSource hitSource;
 
     [Header("Player Materials")]
     public SkinnedMeshRenderer[] renderers;
@@ -164,6 +165,17 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
 
         health -= finalDamage;
 
+        if (hitSource != null)
+        {
+            /*
+            if (!hitSource.isPlaying)
+            {
+                
+            } */
+            hitSource.pitch = 1 + Random.Range(-0.35f, 0.35f);
+            hitSource.Play();
+        }
+
         // Spawn damage indicator (on enemy)
         if (gameObject.CompareTag("Player") == false)
         {
@@ -191,7 +203,7 @@ public class Health : MonoBehaviour, IAwaitable, IDamageable
 
             if (deathSound.clip != null)
             {
-                sfx.Play(deathSound.clip, deathSound.volume, deathSound.pitchVariance, Camera.main.transform);
+                sfx.Play(deathSound.clip, deathSound.volume, deathSound.pitchVariance, transform.position);
             }
 
             //Raise death events

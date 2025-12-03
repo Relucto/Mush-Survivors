@@ -40,6 +40,20 @@ public class MainMenuManager : MonoBehaviour
         }    
     }
 
+    public void StartBestiary()
+    {
+        StartCoroutine(FadeOut());
+
+        IEnumerator FadeOut()
+        {
+            fader.Play("FadeOut");
+
+            yield return new WaitForSeconds(1.5f);
+
+            SceneManager.LoadScene("Bestiary");
+        }   
+    }
+
     public void QuitGame()
     {
         StartCoroutine(FadeOut());

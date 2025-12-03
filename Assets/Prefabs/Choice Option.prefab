@@ -728,6 +728,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9724d179fb97e594c9977a41104cae4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfx: {fileID: 11400000, guid: 7d867d69bedce545e8e9ead0b75ddd3e, type: 2}
+  selectSound:
+    clip: {fileID: 8300000, guid: 5b0ae4189103a2212aeceb5afc56552f, type: 3}
+    volume: 1
+    pitchVariance: 0
   nameText: {fileID: 5437928434915737697}
   levelText: {fileID: 2286036254522243714}
   displayImage: {fileID: 1354983151800590246}

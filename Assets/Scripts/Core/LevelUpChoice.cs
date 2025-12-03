@@ -1,9 +1,12 @@
+using AudioSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LevelUpChoice : MonoBehaviour
 {
+    [SerializeField] AudioChannel sfx;
+    [SerializeField] AudioPair selectSound;
     [SerializeField] TMP_Text nameText, levelText;
     [SerializeField] Image displayImage;
     [SerializeField] Sprite defaultSprite;
@@ -67,5 +70,7 @@ public class LevelUpChoice : MonoBehaviour
         XPManager.Instance.ResetToZero();
         
         UIManager.Instance.PauseGame(false);
+
+        sfx.Play(selectSound.clip, selectSound.volume, selectSound.pitchVariance, GameObject.FindGameObjectWithTag("Player").transform.position);
     }
 }

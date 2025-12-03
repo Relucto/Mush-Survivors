@@ -1,4 +1,5 @@
 using System.Collections;
+using AudioSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +7,8 @@ public class UIManager : MonoBehaviour, IAwaitable
 {
     public static UIManager Instance { get; private set; }
 
+    public AudioChannel sfx;
+    public AudioPair clickSound, hoverSound;
     public GameObject pauseMenu, upgradeScreen;
     public Animator faderAnim;
     public AudioChannel musicChannel;
@@ -42,6 +45,16 @@ public class UIManager : MonoBehaviour, IAwaitable
         }
     }
 
+    public void PlayClick()
+    {
+        sfx.Play(clickSound.clip, clickSound.volume, clickSound.pitchVariance, GameObject.FindGameObjectWithTag("Player").transform);
+    }
+
+    public void PlayHover()
+    {
+        sfx.Play(hoverSound.clip, hoverSound.volume, hoverSound.pitchVariance, GameObject.FindGameObjectWithTag("Player").transform);
+    }
+
     public void EnablePauseMenu(bool value)
     {
         pauseMenu.SetActive(value);
@@ -62,7 +75,8 @@ public class UIManager : MonoBehaviour, IAwaitable
 
     public void ChangeScene(string nextScene)
     {
-        musicChannel.Stop();
+        if (musicChannel != null)
+            musicChannel.Stop();
         
         StartCoroutine(FadeOut());
 

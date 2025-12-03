@@ -95,6 +95,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f1ee8ed6e6eafe58b301824499522ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfx: {fileID: 11400000, guid: 7d867d69bedce545e8e9ead0b75ddd3e, type: 2}
+  xpSound:
+    clip: {fileID: 8300000, guid: 9efe1ee72aaa0b8118def3f3f97ad7f0, type: 3}
+    volume: 0.74
+    pitchVariance: 0.3
+  healthSound:
+    clip: {fileID: 8300000, guid: 7f1aafbcaed2857a9942886660f0a006, type: 3}
+    volume: 1
+    pitchVariance: 0
   lifeTime: 300
   value: 10
   lerpSpeed: 5

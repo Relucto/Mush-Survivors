@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class InteractZone : MonoBehaviour
 {
-    public GameObject[] activateObj, deactivateObj;
+    public GameObject activateObj;
+    public GameObject eToInteractText;
+    public GameObject frontLight;
 
     bool active;
 
@@ -12,6 +14,8 @@ public class InteractZone : MonoBehaviour
         {
             print("enter");
             active = true;
+            eToInteractText.SetActive(true);
+            frontLight.SetActive(false);
         }
     }
 
@@ -21,6 +25,26 @@ public class InteractZone : MonoBehaviour
         {
             print("Exit");
             active = false;
+            eToInteractText.SetActive(false);
+            frontLight.SetActive(true);
+        }
+    }
+
+    void Update()
+    {
+        if (active)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (activateObj.activeInHierarchy == false)
+                {
+                    activateObj.SetActive(true);
+                    PlayerController.isActive = false;
+                    // disable camera movement
+                    eToInteractText.SetActive(false);
+                    frontLight.SetActive(false);
+                }
+            }
         }
     }
 }

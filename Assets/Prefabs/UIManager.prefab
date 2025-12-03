@@ -44,6 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4af2f17088de10499f272705e5223e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
+  sfx: {fileID: 11400000, guid: 7d867d69bedce545e8e9ead0b75ddd3e, type: 2}
+  clickSound:
+    clip: {fileID: 8300000, guid: e6fbc167a864acc5b8d3258a8976f91e, type: 3}
+    volume: 0.5
+    pitchVariance: 0.1
+  hoverSound:
+    clip: {fileID: 8300000, guid: a035be27bc5bb1c76a568954aa9612f5, type: 3}
+    volume: 0.5
+    pitchVariance: 0.1
   pauseMenu: {fileID: 0}
   upgradeScreen: {fileID: 0}
   faderAnim: {fileID: 0}

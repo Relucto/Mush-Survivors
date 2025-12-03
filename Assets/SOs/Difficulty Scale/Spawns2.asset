@@ -18,9 +18,14 @@ MonoBehaviour:
   enemies:
   - prefab: {fileID: 7990338629259969995, guid: d0e34a6e301150b4686507ba755ead4b, type: 3}
     spawnChance: 35
+    health: 575
+    damage: 158
+    speed: 2.63
+  - prefab: {fileID: 7433777963099964046, guid: cda9d87b575fc3b40b771fae35b2a170, type: 3}
+    spawnChance: 20
     health: 400
     damage: 108
-    speed: 2.63
+    speed: 1.53
   - prefab: {fileID: 1311911913535958100, guid: f1cb4a7d8d499990d9ce31aba07fba73, type: 3}
     spawnChance: 50
     health: 150
@@ -31,11 +36,6 @@ MonoBehaviour:
     health: 218
     damage: 180
     speed: 2.88
-  - prefab: {fileID: 7433777963099964046, guid: cda9d87b575fc3b40b771fae35b2a170, type: 3}
-    spawnChance: 20
-    health: 575
-    damage: 158
-    speed: 1.53
   - prefab: {fileID: 4022195550401355764, guid: 75c5994256f757768af71fe94707eda1, type: 3}
     spawnChance: 75
     health: 137

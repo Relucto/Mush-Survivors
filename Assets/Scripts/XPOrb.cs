@@ -1,8 +1,12 @@
+using AudioSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class XPOrb : MonoBehaviour
 {
+    public AudioChannel sfx;
+    public AudioPair xpSound, healthSound;
+
     public float lifeTime;
     public float value;
     public float lerpSpeed;
@@ -53,12 +57,17 @@ public class XPOrb : MonoBehaviour
         if (myType == PickupType.xp)
         {
             XPManager.Instance.AddXP(value);
+            sfx.Play(xpSound.clip, xpSound.volume, xpSound.pitchVariance, playerT.position);
         }
         else if (myType == PickupType.health)
         {
             // Heal player
             Health playerHealth = playerT.GetComponent<Health>();
-            playerHealth.Heal(playerHealth.maxHealth / 6);
+            playerHealth.Heal(playerHealth.maxHealth / 12);
+
+            DamageIndicatorManager.Instance.SpawnPlayerHeal(playerHealth.maxHealth / 12);
+            //Play sound effect
+            sfx.Play(healthSound.clip, healthSound.volume, healthSound.pitchVariance, playerT.position);
         }
         
         Destroy(gameObject);

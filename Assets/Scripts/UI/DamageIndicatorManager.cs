@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class DamageIndicatorManager : MonoBehaviour
 {
+    public Transform playerT;
+
     [Header("Gradient")]
     public Gradient damageGradient;
     public float damageLow;
@@ -42,6 +44,8 @@ public class DamageIndicatorManager : MonoBehaviour
 
         Color color = isCritical ? Color.red : damageGradient.Evaluate(Mathf.InverseLerp(damageLow, damageHigh, value));
 
+        obj.GetComponent<Animator>().speed = 1;
+
         DamageIndicator indicator = obj.GetComponent<DamageIndicator>();
         indicator.SetValue(value, color);
 
@@ -50,6 +54,21 @@ public class DamageIndicatorManager : MonoBehaviour
             indicator.GetComponent<Animator>().speed = 0.5f;
             indicator.transform.localScale = Vector3.one * 2;
         }
+    }
+
+    public void SpawnPlayerHeal(float value)
+    {
+        GameObject obj = pool.Get();
+
+        Vector3 randomOffset = GetRandomOffset(0.75f);
+        obj.transform.position = playerT.position + randomOffset;
+
+        Color color = Color.green;
+
+        obj.GetComponent<Animator>().speed = 0.5f;
+
+        DamageIndicator indicator = obj.GetComponent<DamageIndicator>();
+        indicator.SetValue(value, color);
     }
 
     public void ReturnIndicator(GameObject obj)
