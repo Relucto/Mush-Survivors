@@ -17,17 +17,27 @@ MonoBehaviour:
   maxEnemies: 30
   enemies:
   - prefab: {fileID: 7990338629259969995, guid: d0e34a6e301150b4686507ba755ead4b, type: 3}
-    spawnChance: 50
-    health: 150
+    spawnChance: 35
+    health: 325
+    damage: 80
+    speed: 2
   - prefab: {fileID: 1311911913535958100, guid: f1cb4a7d8d499990d9ce31aba07fba73, type: 3}
     spawnChance: 50
     health: 150
+    damage: 0
+    speed: 0
   - prefab: {fileID: 2168190183651100309, guid: 2f5bf7f3176f299418b2465f4c06d706, type: 3}
-    spawnChance: 50
-    health: 150
+    spawnChance: 70
+    health: 175
+    damage: 100
+    speed: 2.5
   - prefab: {fileID: 7433777963099964046, guid: cda9d87b575fc3b40b771fae35b2a170, type: 3}
-    spawnChance: 50
-    health: 150
+    spawnChance: 20
+    health: 500
+    damage: 125
+    speed: 1.2
   - prefab: {fileID: 4022195550401355764, guid: 75c5994256f757768af71fe94707eda1, type: 3}
-    spawnChance: 50
-    health: 150
+    spawnChance: 75
+    health: 100
+    damage: 75
+    speed: 4

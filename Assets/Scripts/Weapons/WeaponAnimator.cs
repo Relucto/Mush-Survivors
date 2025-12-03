@@ -33,7 +33,7 @@ public class WeaponAnimator : MonoBehaviour
         SetStats();
     }
 
-    void EnableSelf() => isActive = true;
+    public void EnableSelf() => isActive = true;
 
     public void DisableSelf() => isActive = false;
 

@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
     Transform mainCamera;
     CharacterController controller;
     const float gravityValue = -9.81f;
-    float characterRadius, currentStepCooldown;
+    float characterRadius;
 
     bool isReady = false, isDead, grounded, onWall;
 
@@ -43,7 +43,6 @@ public class PlayerController : MonoBehaviour, IAwaitable, IEntity
         mainCamera = Camera.main.transform;
         controller = GetComponent<CharacterController>();
         characterRadius = controller.radius * transform.localScale.x;
-        currentStepCooldown = 0;
 
         speedStats.SetLevel(1);
         SetSpeed(speedStats.GetLevelValue().stats[0].value);

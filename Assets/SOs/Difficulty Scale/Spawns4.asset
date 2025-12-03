@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e89144ae1eeb1c4f9e217cf84b81b64, type: 3}
-  m_Name: Spawns2
+  m_Name: Spawns4
   m_EditorClassIdentifier: 
-  startTime: 150
-  waitTime: 1.75
-  maxEnemies: 32
+  startTime: 450
+  waitTime: 1.25
+  maxEnemies: 37
   enemies:
   - prefab: {fileID: 7990338629259969995, guid: d0e34a6e301150b4686507ba755ead4b, type: 3}
     spawnChance: 35
-    health: 400
-    damage: 108
-    speed: 2.63
+    health: 565
+    damage: 166
+    speed: 3.87
   - prefab: {fileID: 1311911913535958100, guid: f1cb4a7d8d499990d9ce31aba07fba73, type: 3}
     spawnChance: 50
     health: 150
@@ -28,16 +28,16 @@ MonoBehaviour:
     speed: 0
   - prefab: {fileID: 2168190183651100309, guid: 2f5bf7f3176f299418b2465f4c06d706, type: 3}
     spawnChance: 70
-    health: 218
-    damage: 180
-    speed: 2.88
+    health: 305
+    damage: 137
+    speed: 3.63
   - prefab: {fileID: 7433777963099964046, guid: cda9d87b575fc3b40b771fae35b2a170, type: 3}
     spawnChance: 20
-    health: 575
-    damage: 158
-    speed: 1.53
+    health: 725
+    damage: 220
+    speed: 2.18
   - prefab: {fileID: 4022195550401355764, guid: 75c5994256f757768af71fe94707eda1, type: 3}
     spawnChance: 75
-    health: 137
-    damage: 87
-    speed: 4.88
+    health: 212
+    damage: 112
+    speed: 6.63

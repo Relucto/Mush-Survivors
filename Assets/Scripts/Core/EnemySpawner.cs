@@ -6,6 +6,9 @@ public class EnemySpawner : MonoBehaviour, IAwaitable
 {
     public static EnemySpawner Instance { get; private set; }
 
+    public List<EnemyType> bestiaryEnemies = new List<EnemyType>();
+    public Transform bestiarySpawnPoint;
+
     public int maxEnemies = 50;
     public float waitTime = 0.5f;
     public float plantRespawnCooldown;
@@ -38,6 +41,39 @@ public class EnemySpawner : MonoBehaviour, IAwaitable
         public GameObject prefab;
         public int spawnChance;
         public float health;
+        public float damage;
+        public float speed;
+    }
+
+    int walkIndex;
+
+    public void SpawnNextEnemy()
+    {
+        GameObject thing = Instantiate(bestiaryEnemies[walkIndex].prefab, bestiarySpawnPoint.position, Quaternion.identity);
+
+        thing.GetComponent<Health>().SetMaxHealth(bestiaryEnemies[walkIndex].health);
+        
+        if (thing.CompareTag("Plant"))
+        {
+            PlantController plant = thing.GetComponent<PlantController>();
+
+            plant.transform.position = bestiarySpawnPoint.position;
+            plant.playerT = player;
+        }
+        else
+        {
+            thing.GetComponentInChildren<EnemyMeleeAttack>().attackDamage = bestiaryEnemies[walkIndex].damage;
+
+            EnemyController enemy = thing.GetComponent<EnemyController>();
+            enemy.agent.speed = bestiaryEnemies[walkIndex].speed;
+        
+            // Set position and enable
+            enemy.agent.Warp(bestiarySpawnPoint.position);
+            enemy.playerT = player;
+            enemy.agent.enabled = true;
+        }
+
+        walkIndex++;
     }
 
     void Awake()
@@ -175,7 +211,11 @@ public class EnemySpawner : MonoBehaviour, IAwaitable
         }
         else
         {
+            // Set stats (minus health cuz that's already set)
+            enemyObj.GetComponentInChildren<EnemyMeleeAttack>().attackDamage = enemyType.damage;
+
             EnemyController enemy = enemyObj.GetComponent<EnemyController>();
+            enemy.agent.speed = enemyType.speed;
         
             // Set position and enable
             enemy.agent.Warp(spawnPosition);
@@ -190,6 +230,9 @@ public class EnemySpawner : MonoBehaviour, IAwaitable
     {
         int numSuccess = 0;
         int numSpawns = 0;
+
+        if (plantSpawnsParent == null) // hack for bestiary
+            return;
 
         foreach (Transform child in plantSpawnsParent.transform)
         {

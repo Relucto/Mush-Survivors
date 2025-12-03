@@ -19,16 +19,16 @@ MonoBehaviour:
   levelValueGroup:
   - stats:
     - statName: Damage
-      value: 15
+      value: 50
     - statName: Cooldown
       value: 2
     - statName: Slow Multiplier
       value: 0.5
   - stats:
     - statName: Damage
-      value: 25
+      value: 80
     - statName: Cooldown
       value: 1.4
     - statName: Slow Multiplier
       value: 0.34
-  isActive: 1
+  isActive: 0
